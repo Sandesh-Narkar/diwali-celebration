@@ -69,23 +69,13 @@
 
     if (frameData.crop) {
       // --- MOBILE SEQUENCE (VERTICAL 9:16 ARTWORK) ---
-      // Sample precisely from the 9:16 artwork coordinates, eliminating white padding
+      // Sample precisely from the 9:16 artwork coordinates, eliminating side borders
       const { sx, sy, sw, sh } = frameData.crop;
 
-      // Ambient festive gradient background extending the room's atmosphere
-      const bgGrad = ctx.createRadialGradient(
-        cw / 2, ch / 2, Math.min(cw, ch) * 0.15,
-        cw / 2, ch / 2, Math.max(cw, ch) * 0.75
-      );
-      bgGrad.addColorStop(0, '#240621');
-      bgGrad.addColorStop(0.5, '#120310');
-      bgGrad.addColorStop(1, '#080206');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, cw, ch);
-
-      // Safe containment scaling:
-      // Guarantees 100% of the artwork is visible (the children, family, garlands & diyas are never cropped)
-      const scale = Math.min(cw / sw, ch / sh);
+      // FULL-SCREEN IMMERSIVE COVER SCALING:
+      // Fills 100% of the mobile viewport edge-to-edge with ZERO letterboxing
+      // and zero black bars on top or bottom, delivering a true full-screen experience.
+      const scale = Math.max(cw / sw, ch / sh);
       const dw = Math.round(sw * scale);
       const dh = Math.round(sh * scale);
       const dx = Math.round((cw - dw) / 2);
