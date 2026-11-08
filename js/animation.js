@@ -61,6 +61,7 @@
 
       const { sx, sy, sw, sh } = frameData.crop;
 
+      // Calculate responsive cover scaling for full-screen mobile immersion
       const scale = Math.max(cw / sw, ch / sh);
       const dw = Math.round(sw * scale);
       const dh = Math.round(sh * scale);
