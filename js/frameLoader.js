@@ -53,6 +53,7 @@ window.FrameLoader = (function () {
     }
   };
 
+    // Construct standardized asset file URL from sequence configuration
   function getFrameUrl(mode, index) {
     const cfg = SEQUENCES[mode];
     const frameNum = String(index + cfg.firstFrameNum).padStart(3, '0');
