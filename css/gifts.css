@@ -1,0 +1,617 @@
+/* ==========================================================================
+   PERSONALIZED DIWALI GIFT REVEAL EXPERIENCE
+   Premium, Minimal, Festive & Emotionally Engaging Styling
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CLAIM GIFT CTA BUTTON (SECTION 3)
+   -------------------------------------------------------------------------- */
+.greeting-actions-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.claim-gift-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.1rem 2.8rem;
+  font-family: var(--font-serif-title, 'Cinzel', serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #12030A;
+  background: linear-gradient(135deg, #FFF3D6 0%, #F5CE76 40%, #D4AF37 75%, #F7DC94 100%);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.35), 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.claim-gift-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 38px rgba(243, 199, 102, 0.5), 0 4px 10px rgba(0, 0, 0, 0.5);
+  filter: brightness(1.05);
+}
+
+.claim-gift-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.3);
+}
+
+.gift-sparkle-icon {
+  width: 18px;
+  height: 18px;
+  color: #553A04;
+}
+
+/* --------------------------------------------------------------------------
+   2. GIFT MODAL BACKDROP & CONTAINER
+   -------------------------------------------------------------------------- */
+.gift-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 1, 5, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.gift-modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gift-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  background: #140410;
+  background: radial-gradient(circle at 50% 15%, #24071d 0%, #11030e 75%, #0a0208 100%);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 50px rgba(212, 175, 55, 0.12);
+  padding: 3rem 2.5rem 2.5rem;
+  text-align: center;
+  transform: scale(0.94) translateY(12px);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.gift-modal-backdrop.active .gift-modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal Close Button */
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 50%;
+  color: var(--color-gold-200, #FFE4A0);
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.modal-close-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: rotate(90deg);
+}
+
+/* --------------------------------------------------------------------------
+   3. STAGE 1: NAME ENTRY MODAL
+   -------------------------------------------------------------------------- */
+.gift-stage {
+  display: none;
+  animation: fadeInStage 0.4s ease-out forwards;
+}
+
+.gift-stage.active {
+  display: block;
+}
+
+@keyframes fadeInStage {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stage-diya-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1.25rem;
+  filter: drop-shadow(0 0 14px rgba(243, 199, 102, 0.6));
+}
+
+.stage-title {
+  font-family: var(--font-serif-title, 'Cinzel', serif);
+  font-size: clamp(1.4rem, 3.2vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #FFF2D1;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFEAB0 35%, #F0C460 70%, #F7DC94 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+}
+
+.stage-subtitle {
+  font-family: var(--font-serif-body, 'Cormorant Garamond', Georgia, serif);
+  font-size: 1.15rem;
+  color: rgba(253, 249, 240, 0.78);
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.name-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.name-input {
+  width: 100%;
+  padding: 1.05rem 1.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  border-radius: 14px;
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-size: 1.05rem;
+  color: #FDF9F0;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.name-input::placeholder {
+  color: rgba(253, 249, 240, 0.35);
+}
+
+.name-input:focus {
+  border-color: #F3C766;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 16px rgba(243, 199, 102, 0.35);
+}
+
+.validation-msg {
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-size: 0.82rem;
+  color: #FF8577;
+  min-height: 1.2rem;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.validation-msg.visible {
+  opacity: 1;
+}
+
+.continue-btn {
+  width: 100%;
+  padding: 1rem 1.8rem;
+  background: linear-gradient(135deg, #F3C766 0%, #D4AF37 100%);
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #12030A;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.28);
+  transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 8px 24px rgba(243, 199, 102, 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   4. STAGE 2: INTERACTIVE GIFT BOX & THREE-TAP MOTION
+   -------------------------------------------------------------------------- */
+.gift-interactive-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tap-instruction-pill {
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-200, #FFE4A0);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  margin-bottom: 2rem;
+  animation: pulsePill 2s infinite alternate;
+}
+
+@keyframes pulsePill {
+  from { opacity: 0.85; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1.02); }
+}
+
+.gift-box-stage {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  cursor: pointer;
+  touch-action: manipulation;
+  perspective: 800px;
+  margin-bottom: 1.5rem;
+}
+
+.gift-box-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.65));
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Idle Floating */
+.gift-box-stage.idle .gift-box-svg {
+  animation: giftFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes giftFloat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(-1deg); }
+  100% { transform: translateY(-12px) rotate(1deg); }
+}
+
+/* Tap 1 Reaction */
+.gift-box-stage.tap-1 .gift-box-svg {
+  animation: giftBounce1 0.5s ease-out forwards;
+}
+
+@keyframes giftBounce1 {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.1) rotate(-4deg); }
+  65% { transform: scale(0.96) rotate(3deg); }
+  100% { transform: scale(1.02) rotate(0deg); }
+}
+
+/* Tap 2 Reaction */
+.gift-box-stage.tap-2 .gift-box-svg {
+  animation: giftBounce2 0.55s ease-out forwards;
+}
+
+@keyframes giftBounce2 {
+  0% { transform: scale(1.02); }
+  25% { transform: scale(1.16) rotate(6deg); }
+  50% { transform: scale(0.94) rotate(-6deg); }
+  75% { transform: scale(1.08) rotate(3deg); }
+  100% { transform: scale(1.04) rotate(0deg); }
+}
+
+/* Tap 3 Reaction (Burst / Opening) */
+.gift-box-stage.tap-3 .gift-box-svg {
+  animation: giftBurst 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes giftBurst {
+  0% { transform: scale(1.04); opacity: 1; }
+  30% { transform: scale(1.22) rotate(-3deg); filter: drop-shadow(0 0 35px #FFD700); }
+  70% { transform: scale(1.35) rotate(4deg) translateY(-20px); opacity: 0.85; }
+  100% { transform: scale(1.5) translateY(-50px); opacity: 0; }
+}
+
+/* Internal Radiant Seam Light */
+.gift-lid-crack {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.tap-1 .gift-lid-crack {
+  opacity: 0.65;
+  filter: drop-shadow(0 0 8px #FFD700);
+}
+
+.tap-2 .gift-lid-crack {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px #FFE57F);
+}
+
+/* Sparkle Particles Burst */
+.burst-particles {
+  position: absolute;
+  inset: -30px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.tap-3 .burst-particles {
+  opacity: 1;
+  animation: particlesFade 0.8s ease-out forwards;
+}
+
+@keyframes particlesFade {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   5. STAGE 3: PERSONALIZED GIFT REVEAL CARD
+   -------------------------------------------------------------------------- */
+.gift-reveal-card {
+  background: #FAF6EE;
+  color: #1A0A14;
+  border-radius: 20px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.reveal-card-header {
+  margin-bottom: 1.25rem;
+}
+
+.recipient-salutation {
+  font-family: var(--font-serif-title, 'Cinzel', serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  font-weight: 800;
+  color: #7A1728;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  margin-bottom: 0.35rem;
+}
+
+.recipient-intro {
+  font-family: var(--font-serif-body, 'Cormorant Garamond', serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #553A45;
+}
+
+/* Media Showcase Area */
+.gift-media-container {
+  width: 100%;
+  max-height: 380px;
+  background: #140510;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.25rem 0 1.5rem;
+  border: 2px solid #E2C785;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.gift-image-display {
+  width: 100%;
+  height: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  display: block;
+}
+
+.gift-video-display {
+  width: 100%;
+  max-height: 380px;
+  outline: none;
+  background: #000;
+}
+
+/* Personalized Greeting Message */
+.reveal-personal-message {
+  font-family: var(--font-serif-body, 'Cormorant Garamond', serif);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: #2F1221;
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.reveal-signoff-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1.75rem;
+}
+
+.reveal-signoff-headline {
+  font-family: var(--font-serif-title, 'Cinzel', serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #8C1C30;
+  text-transform: uppercase;
+}
+
+.reveal-signoff-author {
+  font-family: var(--font-serif-body, 'Cormorant Garamond', serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #6A4B58;
+}
+
+/* --------------------------------------------------------------------------
+   6. GIFT ACTIONS BUTTONS (IMAGE & VIDEO)
+   -------------------------------------------------------------------------- */
+.gift-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.gift-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.45rem;
+  font-family: var(--font-sans, 'Outfit', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.gift-action-btn.primary {
+  background: #7A1728;
+  color: #FFF4D9;
+  border: 1px solid #7A1728;
+}
+
+.gift-action-btn.primary:hover {
+  background: #961E34;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(122, 23, 40, 0.35);
+}
+
+.gift-action-btn.secondary {
+  background: transparent;
+  color: #7A1728;
+  border: 1.5px solid rgba(122, 23, 40, 0.35);
+}
+
+.gift-action-btn.secondary:hover {
+  border-color: #7A1728;
+  background: rgba(122, 23, 40, 0.05);
+}
+
+.gift-action-btn.tertiary {
+  background: transparent;
+  color: #553A45;
+  border: none;
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.gift-action-btn.tertiary:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   7. LIGHTBOX IMAGE PREVIEW MODAL
+   -------------------------------------------------------------------------- */
+.lightbox-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s;
+}
+
+.lightbox-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content-img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #FFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, transform 0.25s;
+}
+
+.lightbox-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* --------------------------------------------------------------------------
+   8. RESPONSIVE OPTIMIZATIONS FOR MOBILE
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .gift-modal-dialog {
+    padding: 2.25rem 1.5rem 2rem;
+    border-radius: 20px;
+  }
+
+  .gift-reveal-card {
+    padding: 1.85rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .gift-media-container {
+    max-height: 310px;
+  }
+
+  .gift-image-display,
+  .gift-video-display {
+    max-height: 310px;
+  }
+
+  .claim-gift-btn {
+    padding: 0.95rem 2.2rem;
+    font-size: 0.88rem;
+  }
+
+  .gift-actions-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .gift-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

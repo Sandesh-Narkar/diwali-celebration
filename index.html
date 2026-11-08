@@ -14,8 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Stylesheet -->
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/gifts.css">
 </head>
 <body>
 
@@ -200,20 +201,197 @@
         <span class="signature-name">Sandesh</span>
       </div>
 
-      <!-- Action Button to Relive Experience -->
-      <button class="replay-button" id="replayBtn" type="button" aria-label="Replay celebration from start">
-        <svg class="replay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="1 4 1 10 7 10"></polyline>
-          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-        </svg>
-        <span>Experience Again</span>
-      </button>
+      <!-- Greeting Actions: Primary Claim Gift CTA + Replay Action -->
+      <div class="greeting-actions-row">
+        <button class="claim-gift-btn" id="claimGiftBtn" type="button" aria-label="Claim your personalized Diwali gift">
+          <svg class="gift-sparkle-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/>
+          </svg>
+          <span>Claim Your Diwali Gift</span>
+        </button>
+
+        <button class="replay-button" id="replayBtn" type="button" aria-label="Replay celebration from start">
+          <svg class="replay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>Experience Again</span>
+        </button>
+      </div>
     </div>
   </section>
 
-  <!-- JavaScript Modular Animation Engine -->
+  <!-- ========================================================================
+       PERSONALIZED DIWALI GIFT MODAL & MULTI-STAGE REVEAL
+       ======================================================================== -->
+  <div class="gift-modal-backdrop" id="giftModal" role="dialog" aria-modal="true" aria-labelledby="stageTitle">
+    <div class="gift-modal-dialog">
+      <!-- Modal Close Button -->
+      <button class="modal-close-btn" id="modalCloseBtn" type="button" aria-label="Close gift surprise">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- STAGE 1: NAME ENTRY -->
+      <div class="gift-stage active" id="stageName">
+        <svg class="stage-diya-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="14" r="11" fill="#FFA000" opacity="0.6"/>
+          <path d="M24 3C24 3 17 11 17 17C17 21 20 24 24 24C28 24 31 21 31 17C31 11 24 3 24 3Z" fill="url(#modalFlame)"/>
+          <path d="M10 24C11 34 17 38 24 38C31 38 37 34 38 24C33 27 29 27 24 27C19 27 15 27 10 24Z" fill="#D4AF37"/>
+          <defs>
+            <linearGradient id="modalFlame" x1="24" y1="3" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#FFFAD9"/>
+              <stop offset="50%" stop-color="#FFB014"/>
+              <stop offset="100%" stop-color="#E24D00"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <h3 class="stage-title" id="stageTitle">Your little Diwali surprise is waiting!</h3>
+        <p class="stage-subtitle">Enter your name to discover your gift.</p>
+
+        <div class="name-input-group">
+          <input type="text" id="nameInput" class="name-input" placeholder="Type your name here..." autocomplete="name" autocorrect="off" spellcheck="false" maxlength="40" aria-label="Recipient Name" />
+          <span class="validation-msg" id="validationMsg"></span>
+        </div>
+
+        <button type="button" class="continue-btn" id="nameContinueBtn">Continue &rarr;</button>
+      </div>
+
+      <!-- STAGE 2: INTERACTIVE THREE-TAP GIFT BOX -->
+      <div class="gift-stage" id="stageTap">
+        <div class="gift-interactive-wrapper">
+          <span class="tap-instruction-pill" id="tapInstruction">Your surprise is waiting. Tap to open!</span>
+
+          <div class="gift-box-stage idle" id="giftBoxStage" role="button" tabindex="0" aria-label="Tap gift box to open">
+            <!-- Luxury Festive 3D Gift Box SVG -->
+            <svg class="gift-box-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Shadow -->
+              <ellipse cx="80" cy="148" rx="55" ry="9" fill="rgba(0,0,0,0.5)" />
+
+              <!-- Box Lower Base -->
+              <rect x="25" y="65" width="110" height="75" rx="10" fill="url(#giftBoxGrad)" stroke="#4A0813" stroke-width="1.5" />
+              <!-- Filigree Accents -->
+              <path d="M35 75 Q45 85 55 75 T75 75" stroke="#E2C785" stroke-width="1" stroke-dasharray="2 3" opacity="0.4" />
+              <path d="M85 75 Q105 85 125 75" stroke="#E2C785" stroke-width="1" stroke-dasharray="2 3" opacity="0.4" />
+              
+              <!-- Vertical Base Ribbon -->
+              <rect x="68" y="65" width="24" height="75" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="0.8" />
+              <rect x="78" y="65" width="4" height="75" fill="#FFF9E0" opacity="0.6" />
+
+              <!-- Horizontal Base Ribbon -->
+              <rect x="25" y="98" width="110" height="18" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="0.8" />
+              <rect x="25" y="105" width="110" height="3" fill="#FFF9E0" opacity="0.6" />
+
+              <!-- Lid Seam Crack (Lights up on tap 1 & tap 2) -->
+              <path class="gift-lid-crack" d="M22 64 L138 64" stroke="#FFF0A0" stroke-width="3" stroke-linecap="round" />
+
+              <!-- Box Lid -->
+              <g class="gift-lid-group" id="giftLidGroup">
+                <rect x="20" y="44" width="120" height="23" rx="6" fill="url(#giftLidGrad)" stroke="#4A0813" stroke-width="1.5" />
+                <!-- Lid Vertical Ribbon -->
+                <rect x="68" y="44" width="24" height="23" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="0.8" />
+                <rect x="78" y="44" width="4" height="23" fill="#FFF9E0" opacity="0.6" />
+                <!-- Lid Rim Highlight -->
+                <path d="M21 46 H139" stroke="#FFA726" stroke-width="1" opacity="0.5" />
+
+                <!-- Ribbon Bow Rosette -->
+                <!-- Left Bow Loop -->
+                <path d="M74 44 C60 22 36 28 48 42 C56 50 72 45 74 44 Z" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="1" />
+                <path d="M68 39 C58 29 44 32 54 42" stroke="#FFF6CE" stroke-width="1.2" fill="none" opacity="0.7" />
+
+                <!-- Right Bow Loop -->
+                <path d="M86 44 C100 22 124 28 112 42 C104 50 88 45 86 44 Z" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="1" />
+                <path d="M92 39 C102 29 116 32 106 42" stroke="#FFF6CE" stroke-width="1.2" fill="none" opacity="0.7" />
+
+                <!-- Center Bow Knot -->
+                <circle cx="80" cy="44" r="8" fill="url(#goldKnotGrad)" stroke="#A07818" stroke-width="1" />
+                <circle cx="78" cy="42" r="3" fill="#FFFFFF" opacity="0.6" />
+              </g>
+
+              <!-- Burst Particles on Opening -->
+              <g class="burst-particles">
+                <circle cx="40" cy="30" r="3" fill="#FFD700" />
+                <circle cx="120" cy="32" r="3.5" fill="#FFE082" />
+                <circle cx="80" cy="15" r="4" fill="#FFF8E1" />
+                <path d="M25 50 L27 55 L32 57 L27 59 L25 64 L23 59 L18 57 L23 55 Z" fill="#FFCA28" />
+                <path d="M135 50 L137 55 L142 57 L137 59 L135 64 L133 59 L128 57 L133 55 Z" fill="#FFCA28" />
+                <path d="M80 5 L82 9 L86 10 L82 11 L80 15 L78 11 L74 10 L78 9 Z" fill="#FFF" />
+              </g>
+
+              <defs>
+                <linearGradient id="giftBoxGrad" x1="25" y1="65" x2="135" y2="140" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#9C1A2E" />
+                  <stop offset="50%" stop-color="#730F20" />
+                  <stop offset="100%" stop-color="#4B0612" />
+                </linearGradient>
+                <linearGradient id="giftLidGrad" x1="20" y1="44" x2="140" y2="67" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#A81F34" />
+                  <stop offset="60%" stop-color="#7B1223" />
+                  <stop offset="100%" stop-color="#540715" />
+                </linearGradient>
+                <linearGradient id="goldRibbonGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#FFF5D6" />
+                  <stop offset="35%" stop-color="#F2C766" />
+                  <stop offset="75%" stop-color="#C99824" />
+                  <stop offset="100%" stop-color="#E8B946" />
+                </linearGradient>
+                <linearGradient id="goldKnotGrad" x1="72" y1="36" x2="88" y2="52" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#FFF9E6" />
+                  <stop offset="50%" stop-color="#E2B742" />
+                  <stop offset="100%" stop-color="#9E7314" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAGE 3: PERSONALIZED GIFT REVEAL CARD -->
+      <div class="gift-stage" id="stageReveal">
+        <div class="gift-reveal-card">
+          <div class="reveal-card-header">
+            <h3 class="recipient-salutation" id="revealSalutation">Hey Ashish!</h3>
+            <p class="recipient-intro">A little surprise, specially picked for you.</p>
+          </div>
+
+          <!-- Media Display (Image or Video) -->
+          <div class="gift-media-container" id="revealMediaContainer">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Personal Festive Message -->
+          <p class="reveal-personal-message" id="revealPersonalMessage">
+            May your Diwali be filled with happiness, success, and unforgettable moments.
+          </p>
+
+          <!-- Signoff -->
+          <div class="reveal-signoff-block">
+            <span class="reveal-signoff-headline" id="revealSignoffHeadline">Happy Diwali, Ashish!</span>
+            <span class="reveal-signoff-author">With warm wishes, Sandesh</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="gift-actions-row" id="giftActionsRow">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX PREVIEW MODAL -->
+  <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Gift image full view">
+    <button class="lightbox-close-btn" id="lightboxCloseBtn" type="button" aria-label="Close image preview">&times;</button>
+    <img class="lightbox-content-img" id="lightboxImg" src="" alt="Gift full preview" />
+  </div>
+
+  <!-- JavaScript Modular Animation Engine & Gift System -->
   <script src="js/deviceDetection.js"></script>
   <script src="js/frameLoader.js"></script>
   <script src="js/animation.js"></script>
+  <script src="js/gifts.js"></script>
 </body>
 </html>
