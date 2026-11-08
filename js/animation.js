@@ -44,6 +44,8 @@
     if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
       canvas.width = targetWidth;
       canvas.height = targetHeight;
+      canvas.style.width = displayWidth + 'px';
+      canvas.style.height = displayHeight + 'px';
       // Repaint frame immediately on resize
       renderFrame(Math.round(currentFrameFloat), true);
     }
@@ -65,17 +67,25 @@
     const cw = canvas.width;
     const ch = canvas.height;
 
-    // Ambient background clear
-    ctx.fillStyle = '#080206';
-    ctx.fillRect(0, 0, cw, ch);
-
     if (frameData.crop) {
       // --- MOBILE SEQUENCE (VERTICAL 9:16 ARTWORK) ---
       // Sample precisely from the 9:16 artwork coordinates, eliminating white padding
       const { sx, sy, sw, sh } = frameData.crop;
 
-      // Fills mobile screen edge-to-edge without white borders or black bars
-      const scale = Math.max(cw / sw, ch / sh);
+      // Ambient festive gradient background extending the room's atmosphere
+      const bgGrad = ctx.createRadialGradient(
+        cw / 2, ch / 2, Math.min(cw, ch) * 0.15,
+        cw / 2, ch / 2, Math.max(cw, ch) * 0.75
+      );
+      bgGrad.addColorStop(0, '#240621');
+      bgGrad.addColorStop(0.5, '#120310');
+      bgGrad.addColorStop(1, '#080206');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, cw, ch);
+
+      // Safe containment scaling:
+      // Guarantees 100% of the artwork is visible (the children, family, garlands & diyas are never cropped)
+      const scale = Math.min(cw / sw, ch / sh);
       const dw = Math.round(sw * scale);
       const dh = Math.round(sh * scale);
       const dx = Math.round((cw - dw) / 2);
@@ -85,6 +95,9 @@
     } else {
       // --- DESKTOP SEQUENCE (HORIZONTAL 16:9 ARTWORK) ---
       // Preserves 100% of the desktop composition and typography
+      ctx.fillStyle = '#080206';
+      ctx.fillRect(0, 0, cw, ch);
+
       const iw = img.naturalWidth || 1920;
       const ih = img.naturalHeight || 1080;
 

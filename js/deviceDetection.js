@@ -14,25 +14,21 @@ window.DeviceDetector = (function () {
   function detectMode() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const isPortrait = height > width;
+    const isPortrait = height >= width;
     const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-    // Mobile Phone: Screen width <= 768px (regardless of orientation)
-    if (width <= 768) {
+    // Landscape orientation: horizontal desktop composition is ideal
+    if (!isPortrait && width > 540) {
+      return 'desktop';
+    }
+
+    // Portrait orientation on mobile or tablet (width <= 1024):
+    // Dedicated vertical mobile sequence fits best
+    if (isPortrait && (width <= 1024 || isTouch)) {
       return 'mobile';
     }
 
-    // Tablet in portrait orientation: prefers vertical mobile sequence
-    if (isPortrait && width <= 1024) {
-      return 'mobile';
-    }
-
-    // Touch device in portrait: mobile sequence
-    if (isTouch && isPortrait) {
-      return 'mobile';
-    }
-
-    // Desktop / Laptop / Large screen / Landscape tablet: desktop sequence
+    // Standard Desktop / Laptop / Large Screen
     return 'desktop';
   }
 
@@ -49,7 +45,7 @@ window.DeviceDetector = (function () {
           currentMode = newMode;
           notifyChange(newMode, oldMode);
         }
-      }, 150);
+      }, 120);
     }
 
     window.addEventListener('resize', handleResizeOrOrientation, { passive: true });
@@ -85,4 +81,3 @@ window.DeviceDetector = (function () {
     }
   };
 })();
-

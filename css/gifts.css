@@ -581,23 +581,107 @@
    8. RESPONSIVE OPTIMIZATIONS FOR MOBILE
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-  .gift-modal-dialog {
-    padding: 2.25rem 1.5rem 2rem;
-    border-radius: 20px;
+  .gift-modal-backdrop {
+    padding: max(1rem, env(safe-area-inset-top)) 0.75rem max(1.2rem, env(safe-area-inset-bottom));
+    align-items: center;
   }
 
+  .gift-modal-dialog {
+    padding: 1.85rem 1.15rem 1.5rem;
+    border-radius: 20px;
+    max-height: 90vh;
+    max-height: 90dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .modal-close-btn {
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 34px;
+    height: 34px;
+  }
+
+  .stage-diya-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.85rem;
+  }
+
+  .stage-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .stage-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .name-input {
+    padding: 0.85rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .continue-btn {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.82rem;
+  }
+
+  .gift-box-stage {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 1rem;
+  }
+
+  .tap-instruction-pill {
+    font-size: 0.74rem;
+    padding: 0.35rem 0.95rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Reveal Card */
   .gift-reveal-card {
-    padding: 1.85rem 1.25rem;
+    padding: 1.35rem 0.95rem;
     border-radius: 16px;
   }
 
+  .recipient-salutation {
+    font-size: 1.45rem;
+  }
+
+  .recipient-intro {
+    font-size: 0.95rem;
+  }
+
   .gift-media-container {
-    max-height: 310px;
+    max-height: 220px;
+    margin: 0.85rem 0 1rem;
   }
 
   .gift-image-display,
   .gift-video-display {
-    max-height: 310px;
+    max-height: 220px;
+  }
+
+  .reveal-personal-message {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+    padding: 0;
+  }
+
+  .reveal-signoff-headline {
+    font-size: 0.98rem;
+  }
+
+  .reveal-signoff-author {
+    font-size: 0.95rem;
+  }
+
+  .reveal-signoff-block {
+    margin-bottom: 1.25rem;
   }
 
   .claim-gift-btn {
@@ -608,11 +692,14 @@
   .gift-actions-row {
     flex-direction: column;
     width: 100%;
+    gap: 0.6rem;
   }
 
   .gift-action-btn {
     width: 100%;
     justify-content: center;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.78rem;
   }
 }
 
