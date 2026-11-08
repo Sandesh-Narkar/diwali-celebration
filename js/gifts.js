@@ -9,6 +9,7 @@
 
   // --- RECIPIENTS & ASSET REGISTRY ---
   const SHARED_FAMILY_VIDEO = 'GIFTS/FAMILY/diwali_video.mp4';
+  const SPECIAL_FRIENDS_VIDEO = 'GIFTS/FAMILY/WhatsApp Video 2026-11-08 at 4.26.19 PM.mp4';
   const SHARED_GEMINI_TEMPLATE = 'GIFTS/FAMILY/Gemini_Generated_Image_e6np99e6np99e6np.png';
 
   // Precise mapping matching user's actual files and assigned video friends
@@ -65,7 +66,7 @@
     subhjite: {
       displayName: 'Subhjite',
       type: 'video',
-      asset: SHARED_FAMILY_VIDEO,
+      asset: SPECIAL_FRIENDS_VIDEO,
       poster: SHARED_GEMINI_TEMPLATE,
       message: 'Hey Subhjite! Pressed play on this festive memory for you! Wishing you a dazzling Diwali filled with vibrant joy, laughter, and lifelong prosperity.'
     },
@@ -146,7 +147,7 @@
     lav: {
       displayName: 'Lav',
       type: 'video',
-      asset: SHARED_FAMILY_VIDEO,
+      asset: SPECIAL_FRIENDS_VIDEO,
       poster: SHARED_GEMINI_TEMPLATE,
       message: 'Hey Lav! A special Diwali video celebration just for you. May your days be filled with sparkling memories, good fortune, and festive bliss.'
     },
@@ -155,7 +156,7 @@
     sadaf: {
       displayName: 'Sadaf',
       type: 'video',
-      asset: SHARED_FAMILY_VIDEO,
+      asset: SPECIAL_FRIENDS_VIDEO,
       poster: SHARED_GEMINI_TEMPLATE,
       message: 'Hey Sadaf! Bringing you a special festive celebration in motion. May this Diwali shower peace, grace, and radiant blessings upon your life.'
     },
@@ -164,7 +165,7 @@
     yash: {
       displayName: 'Yash',
       type: 'video',
-      asset: SHARED_FAMILY_VIDEO,
+      asset: SPECIAL_FRIENDS_VIDEO,
       poster: SHARED_GEMINI_TEMPLATE,
       message: 'Hey Yash! Here is a vibrant celebration in video for you. May your new year be powered by great adventures, success, and warm moments.'
     },
@@ -588,3 +589,4 @@
   };
 
 })();
+
