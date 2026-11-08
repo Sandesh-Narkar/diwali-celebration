@@ -90,6 +90,7 @@
     lastRenderedMode = activeMode;
   }
 
+    // Synchronize normalized scroll offset with animation frame sequence
   function calculateScrollState() {
     if (!scrollTrack) return;
 
