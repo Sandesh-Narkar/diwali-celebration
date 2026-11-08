@@ -270,6 +270,7 @@
     showStage('tap');
   }
 
+  // Manage three-stage gift opening interaction and progression
   function resetGiftBox() {
     tapCount = 0;
     isTapping = false;
