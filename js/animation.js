@@ -232,6 +232,7 @@
   window.addEventListener('scroll', calculateScrollState, { passive: true });
 
   let resizeDebounce;
+    // Register throttled window resize and orientation change handlers
   function onResize() {
     clearTimeout(resizeDebounce);
     resizeDebounce = setTimeout(() => {
