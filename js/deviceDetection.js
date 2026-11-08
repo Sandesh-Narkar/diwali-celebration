@@ -85,3 +85,4 @@ window.DeviceDetector = (function () {
     }
   };
 })();
+
