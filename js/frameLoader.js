@@ -1,13 +1,6 @@
-/**
- * FRAME LOADER & ASSET MANAGEMENT MODULE
- * Independent frame loader for Desktop (images/) and Mobile (MOBILE_IMAGE/).
- * Features progressive queueing, dynamic scroll priority, and zero-flicker caching.
- */
-
 window.FrameLoader = (function () {
   'use strict';
 
-  // --- CONFIGURATION PER SEQUENCE ---
   const SEQUENCES = {
     desktop: {
       folder: 'IMAGES',
@@ -15,7 +8,7 @@ window.FrameLoader = (function () {
       firstFrameNum: 1,
       prefix: 'ezgif-frame-',
       ext: '.png',
-      // Desktop uses entire 1920x1080 horizontal frame
+
       crop: null,
       aspectMode: 'contain'
     },
@@ -25,15 +18,14 @@ window.FrameLoader = (function () {
       firstFrameNum: 1,
       prefix: 'ezgif-frame-',
       ext: '.png',
-      // Mobile 9:16 portrait artwork slice from 1920x1080 source
-      // Exactly cuts out the surrounding white padding
+
       crop: {
         sx: 656,
         sy: 0,
         sw: 608,
         sh: 1080
       },
-      aspectMode: 'cover' // Fills portrait viewport edge-to-edge
+      aspectMode: 'cover'
     }
   };
 
@@ -43,7 +35,6 @@ window.FrameLoader = (function () {
   let activeMode = 'desktop';
   let activeConfig = SEQUENCES.desktop;
 
-  // Cache per sequence
   const caches = {
     desktop: {
       images: new Array(SEQUENCES.desktop.totalFrames),
@@ -67,7 +58,6 @@ window.FrameLoader = (function () {
     return `${cfg.folder}/${cfg.prefix}${frameNum}${cfg.ext}`;
   }
 
-  // Load a single frame image
   function loadImage(mode, index) {
     const cache = caches[mode];
     return new Promise((resolve, reject) => {
@@ -108,7 +98,6 @@ window.FrameLoader = (function () {
     });
   }
 
-  // Process progressive queue for the active sequence
   function processQueue(mode, onFrameReady) {
     const cache = caches[mode];
     while (cache.activeLoads < MAX_CONCURRENT_LOADS && cache.queue.length > 0) {
@@ -130,12 +119,10 @@ window.FrameLoader = (function () {
     }
   }
 
-  // Prioritize frames around current scroll position
   function prioritize(index, onFrameReady) {
     const cache = caches[activeMode];
     const safeIdx = Math.max(0, Math.min(activeConfig.totalFrames - 1, index));
 
-    // Nearby neighbor indices: [N, N+1, N-1, N+2, N-2, N+3]
     const neighbors = [safeIdx, safeIdx + 1, safeIdx - 1, safeIdx + 2, safeIdx - 2, safeIdx + 3];
 
     for (let i = 0; i < neighbors.length; i++) {
@@ -160,7 +147,6 @@ window.FrameLoader = (function () {
     processQueue(mode, onFrameReady);
   }
 
-  // Initial Critical Preload for active sequence
   function preloadInitial(mode, onProgress, onComplete) {
     activeMode = mode;
     activeConfig = SEQUENCES[mode];
@@ -174,13 +160,12 @@ window.FrameLoader = (function () {
     const total = activeConfig.totalFrames;
     const criticalIndices = [];
 
-    // 1. Initial sequential frames (0 to 13)
     for (let i = 0; i < Math.min(INITIAL_PRELOAD_COUNT, total); i++) {
       criticalIndices.push(i);
     }
-    // 2. Final frame (for instant conclusion greeting transition)
+
     criticalIndices.push(total - 1);
-    // 3. Milestone frames every 15 frames
+
     for (let i = 20; i < total - 1; i += 15) {
       if (!criticalIndices.includes(i)) {
         criticalIndices.push(i);
@@ -213,7 +198,6 @@ window.FrameLoader = (function () {
     });
   }
 
-  // Retrieve cached frame or closest loaded neighbor (prevents blank canvas & flicker)
   function getFrameOrNearest(index) {
     const cache = caches[activeMode];
     const total = activeConfig.totalFrames;
@@ -229,7 +213,6 @@ window.FrameLoader = (function () {
       };
     }
 
-    // Find closest loaded frame
     let closestImg = null;
     let closestIdx = safeIndex;
     let minDistance = Infinity;
@@ -245,7 +228,6 @@ window.FrameLoader = (function () {
       }
     }
 
-    // Trigger priority loading for the missing frame
     prioritize(safeIndex);
 
     return {
@@ -281,4 +263,3 @@ window.FrameLoader = (function () {
     getFrameOrNearest: getFrameOrNearest
   };
 })();
-

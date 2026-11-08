@@ -1,13 +1,6 @@
-/**
- * DIWALI SCROLL-DRIVEN ANIMATION CONTROLLER
- * Coordinates Dual-Sequence Engine (Desktop & Mobile), Canvas Rendering,
- * and Apple-style Scroll Synchronization.
- */
-
 (function () {
   'use strict';
 
-  // --- DOM ELEMENTS ---
   const canvas = document.getElementById('diwaliCanvas');
   const ctx = canvas.getContext('2d', { alpha: false });
   const scrollTrack = document.getElementById('scrollTrack');
@@ -20,7 +13,6 @@
   const hudText = document.getElementById('hudText');
   const replayBtn = document.getElementById('replayBtn');
 
-  // --- ENGINE STATE ---
   let activeMode = window.DeviceDetector ? window.DeviceDetector.getMode() : 'desktop';
   let targetFrameIndex = 0;
   let currentFrameFloat = 0;
@@ -29,11 +21,9 @@
   let isRafRunning = false;
   let isReady = false;
 
-  // --- CANVAS RESIZING WITH DEVICE PIXEL RATIO ---
   function resizeCanvas() {
     if (!canvas) return;
 
-    // Use DPR capped at 2 for crisp rendering without excessive GPU memory on mobile
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const displayWidth = window.innerWidth;
     const displayHeight = window.innerHeight;
@@ -46,12 +36,11 @@
       canvas.height = targetHeight;
       canvas.style.width = displayWidth + 'px';
       canvas.style.height = displayHeight + 'px';
-      // Repaint frame immediately on resize
+
       renderFrame(Math.round(currentFrameFloat), true);
     }
   }
 
-  // --- ADVANCED DUAL-SEQUENCE CANVAS RENDERING ---
   function renderFrame(index, force = false) {
     if (!canvas || !ctx) return;
 
@@ -68,13 +57,9 @@
     const ch = canvas.height;
 
     if (frameData.crop) {
-      // --- MOBILE SEQUENCE (VERTICAL 9:16 ARTWORK) ---
-      // Sample precisely from the 9:16 artwork coordinates, eliminating side borders
+
       const { sx, sy, sw, sh } = frameData.crop;
 
-      // FULL-SCREEN IMMERSIVE COVER SCALING:
-      // Fills 100% of the mobile viewport edge-to-edge with ZERO letterboxing
-      // and zero black bars on top or bottom, delivering a true full-screen experience.
       const scale = Math.max(cw / sw, ch / sh);
       const dw = Math.round(sw * scale);
       const dh = Math.round(sh * scale);
@@ -83,8 +68,7 @@
 
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     } else {
-      // --- DESKTOP SEQUENCE (HORIZONTAL 16:9 ARTWORK) ---
-      // Preserves 100% of the desktop composition and typography
+
       ctx.fillStyle = '#080206';
       ctx.fillRect(0, 0, cw, ch);
 
@@ -104,7 +88,6 @@
     lastRenderedMode = activeMode;
   }
 
-  // --- SCROLL CALCULATION & INTERACTION ---
   function calculateScrollState() {
     if (!scrollTrack) return;
 
@@ -113,14 +96,12 @@
 
     if (totalDistance <= 0) return;
 
-    // Map scroll distance to normalized progress (0.0 to 1.0)
     const progress = Math.max(0, Math.min(1, -trackRect.top / totalDistance));
     const totalFrames = window.FrameLoader.getTotalFrames();
 
     targetFrameIndex = Math.floor(progress * (totalFrames - 1));
     targetFrameIndex = Math.max(0, Math.min(totalFrames - 1, targetFrameIndex));
 
-    // Handle Section 1 Intro Fade (smoothly fades in first 12% of scroll)
     if (introOverlay) {
       const fadeThreshold = 0.12;
       const introFade = Math.min(1, progress / fadeThreshold);
@@ -136,7 +117,6 @@
       }
     }
 
-    // Handle Ambient Corner HUD
     if (scrollHud && hudFill && hudText) {
       if (progress > 0.04 && progress < 0.98) {
         scrollHud.classList.add('visible');
@@ -148,7 +128,6 @@
       hudText.textContent = `${pct}%`;
     }
 
-    // Dynamic queue prioritization for nearby frames
     window.FrameLoader.prioritize(targetFrameIndex, (readyIdx) => {
       const currentInt = Math.round(currentFrameFloat);
       if (currentInt === readyIdx) {
@@ -157,10 +136,8 @@
     });
   }
 
-  // --- REQUEST-ANIMATION-FRAME ENGINE (APPLE-STYLE LERP) ---
   function animationLoop() {
-    // Smooth inertia dampener (0.18):
-    // Synchronizes frame advancement naturally without lag or scroll hijacking
+
     const diff = targetFrameIndex - currentFrameFloat;
 
     if (Math.abs(diff) > 0.001) {
@@ -168,7 +145,7 @@
       const frameToDraw = Math.round(currentFrameFloat);
       renderFrame(frameToDraw);
     } else if (currentFrameFloat !== targetFrameIndex) {
-      // Settle on exact frame when scrolling halts
+
       currentFrameFloat = targetFrameIndex;
       renderFrame(targetFrameIndex);
     }
@@ -176,7 +153,6 @@
     requestAnimationFrame(animationLoop);
   }
 
-  // --- DEVICE & ORIENTATION MODE SWITCHING ---
   function handleDeviceModeSwitch(newMode) {
     if (newMode === activeMode) return;
 
@@ -187,9 +163,8 @@
     window.FrameLoader.initMode(newMode);
     resizeCanvas();
 
-    // Preload critical frames for newly activated sequence
     window.FrameLoader.preloadInitial(newMode, null, () => {
-      // Restore equivalent progress in new sequence
+
       const newTotal = window.FrameLoader.getTotalFrames();
       currentFrameFloat = Math.round(prevProgress * (newTotal - 1));
       targetFrameIndex = currentFrameFloat;
@@ -203,20 +178,17 @@
     });
   }
 
-  // --- INITIALIZATION ---
   function init() {
     activeMode = window.DeviceDetector.getMode();
     window.FrameLoader.initMode(activeMode);
 
     resizeCanvas();
 
-    // Listen for orientation or screen size breakpoint changes
     window.DeviceDetector.onChange(handleDeviceModeSwitch);
 
-    // Initial critical preloading for active mode
     window.FrameLoader.preloadInitial(
       activeMode,
-      // Progress tracking
+
       function (percent) {
         if (loaderProgressBar) {
           loaderProgressBar.style.width = `${percent}%`;
@@ -225,7 +197,7 @@
           loaderStatusText.textContent = `${percent}%`;
         }
       },
-      // Completion
+
       function () {
         isReady = true;
 
@@ -233,17 +205,15 @@
           if (loaderScreen) {
             loaderScreen.classList.add('fade-out');
           }
-          // Render initial frame
+
           renderFrame(0, true);
 
-          // Begin progressive background loading for the rest of frames
           window.FrameLoader.queueRemaining((readyIdx) => {
             if (Math.round(currentFrameFloat) === readyIdx) {
               renderFrame(readyIdx, true);
             }
           });
 
-          // Start RAF tick
           if (!isRafRunning) {
             isRafRunning = true;
             requestAnimationFrame(animationLoop);
@@ -255,7 +225,6 @@
     calculateScrollState();
   }
 
-  // --- LISTENERS ---
   window.addEventListener('scroll', calculateScrollState, { passive: true });
 
   let resizeDebounce;
@@ -276,7 +245,6 @@
     });
   }
 
-  // Start initialization
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

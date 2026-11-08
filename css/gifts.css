@@ -1,11 +1,3 @@
-/* ==========================================================================
-   PERSONALIZED DIWALI GIFT REVEAL EXPERIENCE
-   Premium, Minimal, Festive & Emotionally Engaging Styling
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. CLAIM GIFT CTA BUTTON (SECTION 3)
-   -------------------------------------------------------------------------- */
 .greeting-actions-row {
   display: flex;
   flex-direction: column;
@@ -53,9 +45,6 @@
   color: #553A04;
 }
 
-/* --------------------------------------------------------------------------
-   2. GIFT MODAL BACKDROP & CONTAINER
-   -------------------------------------------------------------------------- */
 .gift-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -98,7 +87,6 @@
   transform: scale(1) translateY(0);
 }
 
-/* Modal Close Button */
 .modal-close-btn {
   position: absolute;
   top: 1.25rem;
@@ -121,9 +109,6 @@
   transform: rotate(90deg);
 }
 
-/* --------------------------------------------------------------------------
-   3. STAGE 1: NAME ENTRY MODAL
-   -------------------------------------------------------------------------- */
 .gift-stage {
   display: none;
   animation: fadeInStage 0.4s ease-out forwards;
@@ -232,9 +217,6 @@
   box-shadow: 0 8px 24px rgba(243, 199, 102, 0.45);
 }
 
-/* --------------------------------------------------------------------------
-   4. STAGE 2: INTERACTIVE GIFT BOX & THREE-TAP MOTION
-   -------------------------------------------------------------------------- */
 .gift-interactive-wrapper {
   display: flex;
   flex-direction: column;
@@ -281,7 +263,6 @@
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Idle Floating */
 .gift-box-stage.idle .gift-box-svg {
   animation: giftFloat 3s ease-in-out infinite alternate;
 }
@@ -292,7 +273,6 @@
   100% { transform: translateY(-12px) rotate(1deg); }
 }
 
-/* Tap 1 Reaction */
 .gift-box-stage.tap-1 .gift-box-svg {
   animation: giftBounce1 0.5s ease-out forwards;
 }
@@ -304,7 +284,6 @@
   100% { transform: scale(1.02) rotate(0deg); }
 }
 
-/* Tap 2 Reaction */
 .gift-box-stage.tap-2 .gift-box-svg {
   animation: giftBounce2 0.55s ease-out forwards;
 }
@@ -317,7 +296,6 @@
   100% { transform: scale(1.04) rotate(0deg); }
 }
 
-/* Tap 3 Reaction (Burst / Opening) */
 .gift-box-stage.tap-3 .gift-box-svg {
   animation: giftBurst 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -329,7 +307,6 @@
   100% { transform: scale(1.5) translateY(-50px); opacity: 0; }
 }
 
-/* Internal Radiant Seam Light */
 .gift-lid-crack {
   opacity: 0;
   transition: opacity 0.35s ease;
@@ -345,7 +322,6 @@
   filter: drop-shadow(0 0 16px #FFE57F);
 }
 
-/* Sparkle Particles Burst */
 .burst-particles {
   position: absolute;
   inset: -30px;
@@ -363,9 +339,6 @@
   100% { transform: scale(1.6); opacity: 0; }
 }
 
-/* --------------------------------------------------------------------------
-   5. STAGE 3: PERSONALIZED GIFT REVEAL CARD
-   -------------------------------------------------------------------------- */
 .gift-reveal-card {
   background: #FAF6EE;
   color: #1A0A14;
@@ -399,7 +372,6 @@
   color: #553A45;
 }
 
-/* Media Showcase Area */
 .gift-media-container {
   width: 100%;
   max-height: 380px;
@@ -429,7 +401,6 @@
   background: #000;
 }
 
-/* Personalized Greeting Message */
 .reveal-personal-message {
   font-family: var(--font-serif-body, 'Cormorant Garamond', serif);
   font-size: 1.25rem;
@@ -462,9 +433,6 @@
   color: #6A4B58;
 }
 
-/* --------------------------------------------------------------------------
-   6. GIFT ACTIONS BUTTONS (IMAGE & VIDEO)
-   -------------------------------------------------------------------------- */
 .gift-actions-row {
   display: flex;
   align-items: center;
@@ -525,9 +493,6 @@
   text-decoration: underline;
 }
 
-/* --------------------------------------------------------------------------
-   7. LIGHTBOX IMAGE PREVIEW MODAL
-   -------------------------------------------------------------------------- */
 .lightbox-modal {
   position: fixed;
   inset: 0;
@@ -577,9 +542,6 @@
   transform: scale(1.05);
 }
 
-/* --------------------------------------------------------------------------
-   8. RESPONSIVE OPTIMIZATIONS FOR MOBILE
-   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .gift-modal-backdrop {
     padding: max(1rem, env(safe-area-inset-top)) 0.75rem max(1.2rem, env(safe-area-inset-bottom));
@@ -641,7 +603,6 @@
     margin-bottom: 1.25rem;
   }
 
-  /* Reveal Card */
   .gift-reveal-card {
     padding: 1.35rem 0.95rem;
     border-radius: 16px;
@@ -702,4 +663,3 @@
     font-size: 0.78rem;
   }
 }
-

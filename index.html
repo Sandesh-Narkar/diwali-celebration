@@ -5,41 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Happy Diwali — An Evening of Light &amp; Togetherness</title>
-  
+
   <meta name="description" content="An immersive, scroll-driven Diwali celebration experience. Wishing you light, prosperity, and joy.">
   <meta name="theme-color" content="#080206">
 
-  <!-- Google Typography: Cinzel Decorative, Cinzel, Cormorant Garamond, Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/gifts.css">
 </head>
 <body>
 
-  <!-- ========================================================================
-       PREMIUM DIWALI LOADER SCREEN
-       ======================================================================== -->
   <div class="loader-screen" id="loaderScreen" aria-label="Loading celebration" role="status">
     <div class="loader-content">
-      <!-- Glowing Festive Diya SVG -->
+
       <svg class="diya-loader-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Ambient Flame Glow -->
+
         <circle cx="32" cy="18" r="16" fill="url(#flameGlow)" opacity="0.65" />
-        <!-- Flame Outer -->
+
         <path d="M32 4C32 4 23 15 23 23C23 28 27 32 32 32C37 32 41 28 41 23C41 15 32 4 32 4Z" fill="url(#flameOuter)" />
-        <!-- Flame Inner Core -->
+
         <path d="M32 12C32 12 27 18 27 23C27 26 29 28 32 28C35 28 37 26 37 23C37 18 32 12 32 12Z" fill="url(#flameInner)" />
-        <!-- Diya Clay/Brass Lamp Bowl -->
+
         <path d="M12 32C13 46 22 52 32 52C42 52 51 46 52 32C45 36 39 36 32 36C25 36 19 36 12 32Z" fill="url(#diyaBowl)" />
-        <!-- Diya Rim Highlight -->
+
         <path d="M12 32C20 37 44 37 52 32C46 34 38 35 32 35C26 35 18 34 12 32Z" fill="#FFF2BD" opacity="0.8" />
-        <!-- Lamp Base Stand -->
+
         <path d="M26 51C26 55 22 58 19 59H45C42 58 38 55 38 51H26Z" fill="url(#diyaBase)" />
-        
+
         <defs>
           <radialGradient id="flameGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
             <stop offset="0%" stop-color="#FF9D00" />
@@ -71,7 +66,6 @@
 
       <span class="loader-tagline">Lighting the Celebration</span>
 
-      <!-- Slender Gold Progress Bar -->
       <div class="loader-progress-track">
         <div class="loader-progress-bar" id="loaderProgressBar"></div>
       </div>
@@ -80,16 +74,11 @@
     </div>
   </div>
 
-
-  <!-- ========================================================================
-       SECTION 2 & 1: FULL-SCREEN CANVAS & SCROLL-DRIVEN ANIMATION RUNWAY
-       ======================================================================== -->
   <main class="scroll-track" id="scrollTrack">
     <div class="sticky-viewport">
-      <!-- Full-screen Sticky Canvas -->
+
       <canvas id="diwaliCanvas" class="diwali-canvas"></canvas>
 
-      <!-- SECTION 1: MINIMAL INTRODUCTION OVERLAY -->
       <header class="intro-overlay" id="introOverlay">
         <div class="intro-top-brand">
           <span class="brand-dot"></span>
@@ -98,7 +87,7 @@
         </div>
 
         <div class="intro-center">
-          <!-- Subtle Decorative Diya Motif -->
+
           <svg class="diwali-decorative-motif" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle cx="24" cy="14" r="11" fill="url(#introGlow)" opacity="0.6" />
             <path d="M24 3C24 3 17 11 17 17C17 21 20 24 24 24C28 24 31 21 31 17C31 11 24 3 24 3Z" fill="url(#introFlame)" />
@@ -129,7 +118,6 @@
         </div>
       </header>
 
-      <!-- Elegant Corner Progress HUD (Visible during scroll) -->
       <div class="scroll-hud" id="scrollHud" aria-hidden="true">
         <div class="hud-track">
           <div class="hud-fill" id="hudFill"></div>
@@ -139,13 +127,9 @@
     </div>
   </main>
 
-
-  <!-- ========================================================================
-       SECTION 3: FESTIVE GREETING MESSAGE
-       ======================================================================== -->
   <section class="greeting-section" id="greetingSection" aria-label="Diwali Greeting">
     <div class="greeting-container">
-      <!-- Diya Motif -->
+
       <svg class="greeting-diya" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <circle cx="32" cy="18" r="16" fill="url(#flameGlow2)" opacity="0.6" />
         <path d="M32 4C32 4 23 15 23 23C23 28 27 32 32 32C37 32 41 28 41 23C41 15 32 4 32 4Z" fill="url(#flameOuter2)" />
@@ -180,28 +164,23 @@
         </defs>
       </svg>
 
-      <!-- Decorative Divider -->
       <div class="decorative-divider" aria-hidden="true">
         <span class="divider-line"></span>
         <span class="divider-sparkle">&#10022;</span>
         <span class="divider-line"></span>
       </div>
 
-      <!-- Main Festive Headline -->
       <h2 class="greeting-headline">Happy Diwali</h2>
 
-      <!-- Heartfelt Greeting Message -->
       <p class="greeting-message">
         May this festival of lights bring happiness, prosperity, peace and beautiful new beginnings to you and your family.
       </p>
 
-      <!-- Sign-off Block -->
       <div class="greeting-signature-block">
         <span class="signature-label">With warm wishes,</span>
         <span class="signature-name">Sandesh</span>
       </div>
 
-      <!-- Greeting Actions: Primary Claim Gift CTA + Replay Action -->
       <div class="greeting-actions-row">
         <button class="claim-gift-btn" id="claimGiftBtn" type="button" aria-label="Claim your personalized Diwali gift">
           <svg class="gift-sparkle-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -221,12 +200,9 @@
     </div>
   </section>
 
-  <!-- ========================================================================
-       PERSONALIZED DIWALI GIFT MODAL & MULTI-STAGE REVEAL
-       ======================================================================== -->
   <div class="gift-modal-backdrop" id="giftModal" role="dialog" aria-modal="true" aria-labelledby="stageTitle">
     <div class="gift-modal-dialog">
-      <!-- Modal Close Button -->
+
       <button class="modal-close-btn" id="modalCloseBtn" type="button" aria-label="Close gift surprise">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -234,7 +210,6 @@
         </svg>
       </button>
 
-      <!-- STAGE 1: NAME ENTRY -->
       <div class="gift-stage active" id="stageName">
         <svg class="stage-diya-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="24" cy="14" r="11" fill="#FFA000" opacity="0.6"/>
@@ -260,58 +235,47 @@
         <button type="button" class="continue-btn" id="nameContinueBtn">Continue &rarr;</button>
       </div>
 
-      <!-- STAGE 2: INTERACTIVE THREE-TAP GIFT BOX -->
       <div class="gift-stage" id="stageTap">
         <div class="gift-interactive-wrapper">
           <span class="tap-instruction-pill" id="tapInstruction">Your surprise is waiting. Tap to open!</span>
 
           <div class="gift-box-stage idle" id="giftBoxStage" role="button" tabindex="0" aria-label="Tap gift box to open">
-            <!-- Luxury Festive 3D Gift Box SVG -->
+
             <svg class="gift-box-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Shadow -->
+
               <ellipse cx="80" cy="148" rx="55" ry="9" fill="rgba(0,0,0,0.5)" />
 
-              <!-- Box Lower Base -->
               <rect x="25" y="65" width="110" height="75" rx="10" fill="url(#giftBoxGrad)" stroke="#4A0813" stroke-width="1.5" />
-              <!-- Filigree Accents -->
+
               <path d="M35 75 Q45 85 55 75 T75 75" stroke="#E2C785" stroke-width="1" stroke-dasharray="2 3" opacity="0.4" />
               <path d="M85 75 Q105 85 125 75" stroke="#E2C785" stroke-width="1" stroke-dasharray="2 3" opacity="0.4" />
-              
-              <!-- Vertical Base Ribbon -->
+
               <rect x="68" y="65" width="24" height="75" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="0.8" />
               <rect x="78" y="65" width="4" height="75" fill="#FFF9E0" opacity="0.6" />
 
-              <!-- Horizontal Base Ribbon -->
               <rect x="25" y="98" width="110" height="18" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="0.8" />
               <rect x="25" y="105" width="110" height="3" fill="#FFF9E0" opacity="0.6" />
 
-              <!-- Lid Seam Crack (Lights up on tap 1 & tap 2) -->
               <path class="gift-lid-crack" d="M22 64 L138 64" stroke="#FFF0A0" stroke-width="3" stroke-linecap="round" />
 
-              <!-- Box Lid -->
               <g class="gift-lid-group" id="giftLidGroup">
                 <rect x="20" y="44" width="120" height="23" rx="6" fill="url(#giftLidGrad)" stroke="#4A0813" stroke-width="1.5" />
-                <!-- Lid Vertical Ribbon -->
+
                 <rect x="68" y="44" width="24" height="23" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="0.8" />
                 <rect x="78" y="44" width="4" height="23" fill="#FFF9E0" opacity="0.6" />
-                <!-- Lid Rim Highlight -->
+
                 <path d="M21 46 H139" stroke="#FFA726" stroke-width="1" opacity="0.5" />
 
-                <!-- Ribbon Bow Rosette -->
-                <!-- Left Bow Loop -->
                 <path d="M74 44 C60 22 36 28 48 42 C56 50 72 45 74 44 Z" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="1" />
                 <path d="M68 39 C58 29 44 32 54 42" stroke="#FFF6CE" stroke-width="1.2" fill="none" opacity="0.7" />
 
-                <!-- Right Bow Loop -->
                 <path d="M86 44 C100 22 124 28 112 42 C104 50 88 45 86 44 Z" fill="url(#goldRibbonGrad)" stroke="#A07818" stroke-width="1" />
                 <path d="M92 39 C102 29 116 32 106 42" stroke="#FFF6CE" stroke-width="1.2" fill="none" opacity="0.7" />
 
-                <!-- Center Bow Knot -->
                 <circle cx="80" cy="44" r="8" fill="url(#goldKnotGrad)" stroke="#A07818" stroke-width="1" />
                 <circle cx="78" cy="42" r="3" fill="#FFFFFF" opacity="0.6" />
               </g>
 
-              <!-- Burst Particles on Opening -->
               <g class="burst-particles">
                 <circle cx="40" cy="30" r="3" fill="#FFD700" />
                 <circle cx="120" cy="32" r="3.5" fill="#FFE082" />
@@ -349,7 +313,6 @@
         </div>
       </div>
 
-      <!-- STAGE 3: PERSONALIZED GIFT REVEAL CARD -->
       <div class="gift-stage" id="stageReveal">
         <div class="gift-reveal-card">
           <div class="reveal-card-header">
@@ -357,38 +320,32 @@
             <p class="recipient-intro">A little surprise, specially picked for you.</p>
           </div>
 
-          <!-- Media Display (Image or Video) -->
           <div class="gift-media-container" id="revealMediaContainer">
-            <!-- Dynamically populated -->
+
           </div>
 
-          <!-- Personal Festive Message -->
           <p class="reveal-personal-message" id="revealPersonalMessage">
             May your Diwali be filled with happiness, success, and unforgettable moments.
           </p>
 
-          <!-- Signoff -->
           <div class="reveal-signoff-block">
             <span class="reveal-signoff-headline" id="revealSignoffHeadline">Happy Diwali, Ashish!</span>
             <span class="reveal-signoff-author">With warm wishes, Sandesh</span>
           </div>
 
-          <!-- Action Buttons -->
           <div class="gift-actions-row" id="giftActionsRow">
-            <!-- Dynamically populated -->
+
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- LIGHTBOX PREVIEW MODAL -->
   <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Gift image full view">
     <button class="lightbox-close-btn" id="lightboxCloseBtn" type="button" aria-label="Close image preview">&times;</button>
     <img class="lightbox-content-img" id="lightboxImg" src="" alt="Gift full preview" />
   </div>
 
-  <!-- JavaScript Modular Animation Engine & Gift System -->
   <script src="js/deviceDetection.js"></script>
   <script src="js/frameLoader.js"></script>
   <script src="js/animation.js"></script>

@@ -1,20 +1,12 @@
-/**
- * PERSONALIZED DIWALI GIFT REVEAL ENGINE
- * Recipient identification, multi-stage interactive gift box,
- * and personalized multimedia reveal cards.
- */
-
 (function () {
   'use strict';
 
-  // --- RECIPIENTS & ASSET REGISTRY ---
   const SHARED_FAMILY_VIDEO = 'GIFTS/FAMILY/diwali_video.mp4';
   const SPECIAL_FRIENDS_VIDEO = 'GIFTS/FAMILY/WhatsApp Video 2026-11-08 at 4.26.19 PM.mp4';
   const SHARED_GEMINI_TEMPLATE = 'GIFTS/FAMILY/Gemini_Generated_Image_e6np99e6np99e6np.png';
 
-  // Precise mapping matching user's actual files and assigned video friends
   const RECIPIENTS = {
-    // 1. Sandesh (Host & Creator)
+
     sandesh: {
       displayName: 'Sandesh',
       type: 'image',
@@ -22,7 +14,6 @@
       message: 'Happy Diwali, Sandesh! May this labor of love and creativity bring warm light, smiles, and lasting togetherness to all our loved ones.'
     },
 
-    // 2. Yaswanth
     yaswanth: {
       displayName: 'Yaswanth',
       type: 'image',
@@ -30,7 +21,6 @@
       message: 'Hey Yaswanth! Wishing you a sparkling festival of lights! May this new season bring you tremendous achievements, continuous joy, and bright horizons.'
     },
 
-    // 3. Ashish
     ashish: {
       displayName: 'Ashish',
       type: 'image',
@@ -38,7 +28,6 @@
       message: 'Hey Ashish! A little surprise, specially picked for you. May your Diwali be filled with great laughter, thriving success, and unforgettable moments.'
     },
 
-    // 4. Deepak (filename is Deepak.jpeg with capital D)
     deepak: {
       displayName: 'Deepak',
       type: 'image',
@@ -46,7 +35,6 @@
       message: 'Hey Deepak! May the warmth and light of Diwali brighten your path toward greatness. Wishing you peace, abundance, and memorable festivities with loved ones.'
     },
 
-    // 5. Satyam
     satyam: {
       displayName: 'Satyam',
       type: 'image',
@@ -54,7 +42,6 @@
       message: 'Hey Satyam! Here is a special Diwali token for you. May your days ahead be illuminated with clarity, boundless happiness, and wonderful milestones.'
     },
 
-    // 6. Rehan
     rehan: {
       displayName: 'Rehan',
       type: 'image',
@@ -62,7 +49,6 @@
       message: 'Hey Rehan! May the festive lights shine down upon you and bring limitless smiles, prosperity, and peace to your life. Have an incredible celebration!'
     },
 
-    // 7. Subhjite (Special Video Recipient)
     subhjite: {
       displayName: 'Subhjite',
       type: 'video',
@@ -71,7 +57,6 @@
       message: 'Hey Subhjite! Pressed play on this festive memory for you! Wishing you a dazzling Diwali filled with vibrant joy, laughter, and lifelong prosperity.'
     },
 
-    // 8. Junaid
     junaid: {
       displayName: 'Junaid',
       type: 'image',
@@ -79,7 +64,6 @@
       message: 'Hey Junaid! May this auspicious occasion illuminate your dreams and lead you to inspiring achievements. Have a blessed and joyful Diwali!'
     },
 
-    // 9. Aryan
     aryan: {
       displayName: 'Aryan',
       type: 'image',
@@ -87,7 +71,6 @@
       message: 'Hey Aryan! Here is a little festive magic curated for you. May your year ahead be as luminous, uplifting, and radiant as Diwali night.'
     },
 
-    // 10. Zeeshan
     zeeshan: {
       displayName: 'Zeeshan',
       type: 'image',
@@ -95,7 +78,6 @@
       message: 'Hey Zeeshan! Wishing you good vibes, prosperous days, and unending happiness. May the celebrations leave you inspired and recharged!'
     },
 
-    // 11. Harsh
     harsh: {
       displayName: 'Harsh',
       type: 'image',
@@ -103,7 +85,6 @@
       message: 'Hey Harsh! Light up the night and celebrate in full spirit! May this year open doors to bold opportunities and fulfilling achievements.'
     },
 
-    // 12. Akash
     akash: {
       displayName: 'Akash',
       type: 'image',
@@ -111,7 +92,6 @@
       message: 'Hey Akash! Sending you heartfelt festive wishes. May this Diwali fill your days with bright ideas, enduring harmony, and lasting success.'
     },
 
-    // 13. Karim
     karim: {
       displayName: 'Karim',
       type: 'image',
@@ -119,7 +99,6 @@
       message: 'Hey Karim! A warm Diwali surprise just for you. May the divine lights bring a wealth of happiness, good health, and sweet moments.'
     },
 
-    // 14. Sahil
     sahil: {
       displayName: 'Sahil',
       type: 'image',
@@ -127,7 +106,6 @@
       message: 'Hey Sahil! Wishing you a Diwali glowing with endless energy, laughter, and high spirits. Have a joyful celebration with your family!'
     },
 
-    // 15. Rahul
     rahul: {
       displayName: 'Rahul',
       type: 'image',
@@ -135,7 +113,6 @@
       message: 'Hey Rahul! May the warmth of every diya bring peace to your soul and fuel your highest ambitions. Have a fantastic and blessed Diwali!'
     },
 
-    // 16. Shani
     shani: {
       displayName: 'Shani',
       type: 'image',
@@ -143,7 +120,6 @@
       message: 'Hey Shani! May this festival of lights banish all shadows and illuminate a prosperous, fulfilling future for you and your family.'
     },
 
-    // 17. Lav (Special Video Recipient)
     lav: {
       displayName: 'Lav',
       type: 'video',
@@ -152,7 +128,6 @@
       message: 'Hey Lav! A special Diwali video celebration just for you. May your days be filled with sparkling memories, good fortune, and festive bliss.'
     },
 
-    // 18. Sadaf (Special Video Recipient)
     sadaf: {
       displayName: 'Sadaf',
       type: 'video',
@@ -161,7 +136,6 @@
       message: 'Hey Sadaf! Bringing you a special festive celebration in motion. May this Diwali shower peace, grace, and radiant blessings upon your life.'
     },
 
-    // 19. Yash (Special Video Recipient)
     yash: {
       displayName: 'Yash',
       type: 'video',
@@ -170,7 +144,6 @@
       message: 'Hey Yash! Here is a vibrant celebration in video for you. May your new year be powered by great adventures, success, and warm moments.'
     },
 
-    // 20. Raj
     raj: {
       displayName: 'Raj',
       type: 'image',
@@ -179,48 +152,39 @@
     }
   };
 
-  // --- STATE ---
   let currentRecipient = null;
   let tapCount = 0;
   let isTapping = false;
 
-  // --- DOM CACHE ---
   const claimGiftBtn = document.getElementById('claimGiftBtn');
   const giftModal = document.getElementById('giftModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
 
-  // Stages
   const stageName = document.getElementById('stageName');
   const stageTap = document.getElementById('stageTap');
   const stageReveal = document.getElementById('stageReveal');
 
-  // Name Entry Inputs
   const nameInput = document.getElementById('nameInput');
   const nameContinueBtn = document.getElementById('nameContinueBtn');
   const validationMsg = document.getElementById('validationMsg');
 
-  // Interactive Box
   const giftBoxStage = document.getElementById('giftBoxStage');
   const tapInstruction = document.getElementById('tapInstruction');
 
-  // Reveal Elements
   const revealSalutation = document.getElementById('revealSalutation');
   const revealMediaContainer = document.getElementById('revealMediaContainer');
   const revealPersonalMessage = document.getElementById('revealPersonalMessage');
   const revealSignoffHeadline = document.getElementById('revealSignoffHeadline');
   const giftActionsRow = document.getElementById('giftActionsRow');
 
-  // Lightbox
   const lightboxModal = document.getElementById('lightboxModal');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
 
-  // Helper to format proper title case
   function toTitleCase(str) {
     return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   }
 
-  // --- RECIPIENT RESOLUTION (FAMILY RULE) ---
   function resolveRecipient(rawName) {
     const cleanKey = rawName.trim().toLowerCase().replace(/\s+/g, ' ');
 
@@ -228,7 +192,6 @@
       return RECIPIENTS[cleanKey];
     }
 
-    // FAMILY RULE: If not in friends list, show the family gift experience
     const formattedName = toTitleCase(rawName.trim());
     return {
       displayName: formattedName,
@@ -240,13 +203,11 @@
     };
   }
 
-  // --- MODAL CONTROLS ---
   function openGiftModal() {
     if (!giftModal) return;
     giftModal.classList.add('active');
     document.body.style.overflow = 'hidden';
 
-    // Reset to Stage 1 (Name Entry)
     showStage('name');
     if (nameInput) {
       nameInput.value = '';
@@ -263,13 +224,11 @@
     giftModal.classList.remove('active');
     document.body.style.overflow = '';
 
-    // Stop video playback if active
     const activeVideo = giftModal.querySelector('video');
     if (activeVideo) {
       activeVideo.pause();
     }
 
-    // Reset states
     setTimeout(() => {
       showStage('name');
       resetGiftBox();
@@ -286,7 +245,6 @@
     if (stageNameKey === 'reveal' && stageReveal) stageReveal.classList.add('active');
   }
 
-  // --- STAGE 1: SUBMISSION ---
   function handleNameSubmit() {
     if (!nameInput) return;
     const val = nameInput.value ? nameInput.value.trim() : '';
@@ -304,15 +262,12 @@
       validationMsg.classList.remove('visible');
     }
 
-    // Resolve recipient
     currentRecipient = resolveRecipient(val);
 
-    // Proceed to interactive gift box stage
     resetGiftBox();
     showStage('tap');
   }
 
-  // --- STAGE 2: THREE-TAP INTERACTION ---
   function resetGiftBox() {
     tapCount = 0;
     isTapping = false;
@@ -347,7 +302,6 @@
         tapInstruction.textContent = 'Opening your gift... ✨';
       }
 
-      // Transition to final reveal after burst animation plays
       setTimeout(() => {
         renderGiftCard(currentRecipient);
         showStage('reveal');
@@ -356,26 +310,21 @@
     }
   }
 
-  // --- STAGE 3: REVEAL CARD RENDERING ---
   function renderGiftCard(recipient) {
     if (!recipient) return;
 
-    // 1. Salutation
     if (revealSalutation) {
       revealSalutation.textContent = `Hey ${recipient.displayName}!`;
     }
 
-    // 2. Personal Message
     if (revealPersonalMessage) {
       revealPersonalMessage.textContent = recipient.message;
     }
 
-    // 3. Signoff
     if (revealSignoffHeadline) {
       revealSignoffHeadline.textContent = `Happy Diwali, ${recipient.displayName}!`;
     }
 
-    // 4. Media container
     if (revealMediaContainer) {
       revealMediaContainer.innerHTML = '';
 
@@ -400,12 +349,11 @@
       }
     }
 
-    // 5. Actions row
     if (giftActionsRow) {
       giftActionsRow.innerHTML = '';
 
       if (recipient.type === 'video') {
-        // Video Controls
+
         const playBtn = document.createElement('button');
         playBtn.className = 'gift-action-btn primary';
         playBtn.type = 'button';
@@ -457,7 +405,7 @@
         giftActionsRow.appendChild(replayVideoBtn);
         giftActionsRow.appendChild(homeBtn);
       } else {
-        // Image Controls
+
         const viewBtn = document.createElement('button');
         viewBtn.className = 'gift-action-btn secondary';
         viewBtn.type = 'button';
@@ -472,7 +420,6 @@
           openLightbox(recipient.asset);
         });
 
-        // Direct Download Link
         const downloadBtn = document.createElement('a');
         downloadBtn.className = 'gift-action-btn primary';
         downloadBtn.href = recipient.asset;
@@ -500,7 +447,6 @@
     }
   }
 
-  // --- LIGHTBOX PREVIEW ---
   function openLightbox(src) {
     if (!lightboxModal || !lightboxImg) return;
     lightboxImg.src = src;
@@ -512,7 +458,6 @@
     lightboxModal.classList.remove('active');
   }
 
-  // --- EVENT LISTENERS ---
   function initListeners() {
     if (claimGiftBtn) {
       claimGiftBtn.addEventListener('click', openGiftModal);
@@ -522,7 +467,6 @@
       modalCloseBtn.addEventListener('click', closeGiftModal);
     }
 
-    // Backdrop click outside to close
     if (giftModal) {
       giftModal.addEventListener('click', (e) => {
         if (e.target === giftModal) {
@@ -531,7 +475,6 @@
       });
     }
 
-    // Name submit triggers
     if (nameContinueBtn) {
       nameContinueBtn.addEventListener('click', handleNameSubmit);
     }
@@ -544,12 +487,10 @@
       });
     }
 
-    // Gift Box Tapping
     if (giftBoxStage) {
       giftBoxStage.addEventListener('click', handleGiftTap);
     }
 
-    // Lightbox close
     if (lightboxCloseBtn) {
       lightboxCloseBtn.addEventListener('click', closeLightbox);
     }
@@ -561,7 +502,6 @@
       });
     }
 
-    // Escape key closes modals
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (lightboxModal && lightboxModal.classList.contains('active')) {
@@ -573,14 +513,12 @@
     });
   }
 
-  // --- INIT ---
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initListeners);
   } else {
     initListeners();
   }
 
-  // Expose API for testing
   window.GiftEngine = {
     recipients: RECIPIENTS,
     resolveRecipient: resolveRecipient,
@@ -589,4 +527,3 @@
   };
 
 })();
-

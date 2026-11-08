@@ -1,8 +1,3 @@
-/* ==========================================================================
-   DIWALI SCROLL-DRIVEN ANIMATION EXPERIENCE
-   Premium Apple-inspired Interactive Greeting
-   ========================================================================== */
-
 :root {
   --color-bg-base: #080206;
   --color-bg-radial: #170412;
@@ -16,15 +11,14 @@
   --color-text-primary: #FDF9F0;
   --color-text-secondary: rgba(253, 249, 240, 0.75);
   --color-text-muted: rgba(253, 249, 240, 0.45);
-  
+
   --font-serif-title: 'Cinzel', 'Cinzel Decorative', Georgia, 'Times New Roman', serif;
   --font-serif-body: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  
+
   --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Global Reset & Box Sizing */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -38,7 +32,7 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: auto; /* Preserve natural scroll physics */
+  scroll-behavior: auto;
   overflow-x: clip;
   width: 100%;
 }
@@ -52,9 +46,6 @@ body {
   min-height: 100vh;
 }
 
-/* --------------------------------------------------------------------------
-   1. LOADER SCREEN
-   -------------------------------------------------------------------------- */
 .loader-screen {
   position: fixed;
   inset: 0;
@@ -84,7 +75,6 @@ body {
   width: 380px;
 }
 
-/* Diya Icon in Loader */
 .diya-loader-icon {
   width: 64px;
   height: 64px;
@@ -143,13 +133,10 @@ body {
   opacity: 0.85;
 }
 
-/* --------------------------------------------------------------------------
-   2. MAIN SCROLL TRACK & STICKY VIEWPORT
-   -------------------------------------------------------------------------- */
 .scroll-track {
   position: relative;
   width: 100%;
-  /* 500vh provides a comfortable, responsive Apple-like scroll runway */
+
   height: 500vh;
   z-index: 1;
 }
@@ -168,7 +155,6 @@ body {
   background: radial-gradient(circle at 50% 50%, #1a0614 0%, #080206 80%);
 }
 
-/* Full-Screen Canvas */
 .diwali-canvas {
   position: absolute;
   top: 0;
@@ -177,15 +163,12 @@ body {
   height: 100%;
   display: block;
   z-index: 2;
-  /* Crisp image rendering */
+
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   pointer-events: none;
 }
 
-/* --------------------------------------------------------------------------
-   3. SECTION 1: MINIMAL INTRODUCTION OVERLAY
-   -------------------------------------------------------------------------- */
 .intro-overlay {
   position: absolute;
   inset: 0;
@@ -206,7 +189,6 @@ body {
   visibility: hidden;
 }
 
-/* Top Subtle Branding */
 .intro-top-brand {
   display: flex;
   align-items: center;
@@ -231,7 +213,6 @@ body {
   font-weight: 600;
 }
 
-/* Center Content */
 .intro-center {
   display: flex;
   flex-direction: column;
@@ -260,7 +241,7 @@ body {
   line-height: 1.18;
   letter-spacing: 0.04em;
   margin-bottom: 1rem;
-  /* Gold Foil Shimmer Gradient */
+
   background: linear-gradient(135deg, #FFF5D6 0%, #F5CE76 35%, #D4AF37 60%, #FFE9AD 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -276,7 +257,6 @@ body {
   max-width: 580px;
 }
 
-/* Bottom Scroll Instruction */
 .intro-scroll-hint {
   display: flex;
   flex-direction: column;
@@ -315,9 +295,6 @@ body {
   }
 }
 
-/* --------------------------------------------------------------------------
-   4. ELEGANT AMBIENT CORNER PROGRESS HUD
-   -------------------------------------------------------------------------- */
 .scroll-hud {
   position: absolute;
   bottom: 1.8rem;
@@ -365,9 +342,6 @@ body {
   color: var(--color-gold-200);
 }
 
-/* --------------------------------------------------------------------------
-   5. SECTION 3: GREETING MESSAGE
-   -------------------------------------------------------------------------- */
 .greeting-section {
   position: relative;
   z-index: 10;
@@ -390,7 +364,6 @@ body {
   position: relative;
 }
 
-/* Subtle Glowing Festive Diya */
 .greeting-diya {
   width: 68px;
   height: 68px;
@@ -399,7 +372,6 @@ body {
   animation: flameBreathe 3.5s ease-in-out infinite alternate;
 }
 
-/* Decorative Divider */
 .decorative-divider {
   display: flex;
   align-items: center;
@@ -427,7 +399,7 @@ body {
   letter-spacing: 0.05em;
   line-height: 1.1;
   margin-bottom: 1.75rem;
-  /* Luxurious Multi-stop Metallic Gold Gradient */
+
   background: linear-gradient(135deg, #FFFFFF 0%, #FFEAB0 25%, #F0C460 50%, #B8892C 75%, #F7DC94 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -469,7 +441,6 @@ body {
   color: var(--color-gold-300);
 }
 
-/* Interactive Replay Action Button */
 .replay-button {
   display: inline-flex;
   align-items: center;
@@ -512,16 +483,12 @@ body {
   transform: rotate(-180deg);
 }
 
-/* --------------------------------------------------------------------------
-   6. RESPONSIVE DESIGN FOR TABLETS & MOBILES
-   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-  /* Snappy, natural mobile touch scroll runway (approx 3-4 gentle thumb swipes) */
+
   .scroll-track {
     height: 280vh;
   }
 
-  /* SECTION 1: ELEGANT MOBILE INTRO (Positioned to keep the family artwork hero) */
   .intro-overlay {
     padding: max(1.25rem, env(safe-area-inset-top)) 1.2rem max(1.6rem, env(safe-area-inset-bottom));
   }
@@ -574,7 +541,6 @@ body {
     letter-spacing: 0.18em;
   }
 
-  /* Position Scroll HUD at top-right on mobile to prevent obscuring bottom art */
   .scroll-hud {
     top: max(1.1rem, env(safe-area-inset-top));
     bottom: auto;
@@ -583,7 +549,6 @@ body {
     transform: scale(0.95);
   }
 
-  /* SECTION 3: MOBILE GREETING (Fits cleanly in 100dvh without awkward scrolling) */
   .greeting-section {
     min-height: 100vh;
     min-height: 100dvh;
