@@ -1,6 +1,7 @@
 window.FrameLoader = (function () {
   'use strict';
 
+  // Configure sequence metadata and frame clipping boundaries
   const SEQUENCES = {
     desktop: {
       folder: 'IMAGES',
