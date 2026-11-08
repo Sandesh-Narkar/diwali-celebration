@@ -157,6 +157,7 @@ body {
   background: radial-gradient(circle at 50% 50%, #1a0614 0%, #080206 80%);
 }
 
+/* High-performance hardware accelerated canvas layer presentation */
 .diwali-canvas {
   position: absolute;
   top: 0;
