@@ -138,6 +138,7 @@
     });
   }
 
+  // Interpolate scroll progress using requestAnimationFrame damping loop
   function animationLoop() {
 
     const diff = targetFrameIndex - currentFrameFloat;
