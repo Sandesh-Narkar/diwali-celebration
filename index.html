@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Happy Diwali — An Evening of Light &amp; Togetherness</title>
+  
+  <meta name="description" content="An immersive, scroll-driven Diwali celebration experience. Wishing you light, prosperity, and joy.">
+  <meta name="theme-color" content="#080206">
+
+  <!-- Google Typography: Cinzel Decorative, Cinzel, Cormorant Garamond, Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       PREMIUM DIWALI LOADER SCREEN
+       ======================================================================== -->
+  <div class="loader-screen" id="loaderScreen" aria-label="Loading celebration" role="status">
+    <div class="loader-content">
+      <!-- Glowing Festive Diya SVG -->
+      <svg class="diya-loader-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Ambient Flame Glow -->
+        <circle cx="32" cy="18" r="16" fill="url(#flameGlow)" opacity="0.65" />
+        <!-- Flame Outer -->
+        <path d="M32 4C32 4 23 15 23 23C23 28 27 32 32 32C37 32 41 28 41 23C41 15 32 4 32 4Z" fill="url(#flameOuter)" />
+        <!-- Flame Inner Core -->
+        <path d="M32 12C32 12 27 18 27 23C27 26 29 28 32 28C35 28 37 26 37 23C37 18 32 12 32 12Z" fill="url(#flameInner)" />
+        <!-- Diya Clay/Brass Lamp Bowl -->
+        <path d="M12 32C13 46 22 52 32 52C42 52 51 46 52 32C45 36 39 36 32 36C25 36 19 36 12 32Z" fill="url(#diyaBowl)" />
+        <!-- Diya Rim Highlight -->
+        <path d="M12 32C20 37 44 37 52 32C46 34 38 35 32 35C26 35 18 34 12 32Z" fill="#FFF2BD" opacity="0.8" />
+        <!-- Lamp Base Stand -->
+        <path d="M26 51C26 55 22 58 19 59H45C42 58 38 55 38 51H26Z" fill="url(#diyaBase)" />
+        
+        <defs>
+          <radialGradient id="flameGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+            <stop offset="0%" stop-color="#FF9D00" />
+            <stop offset="100%" stop-color="#FF9D00" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="flameOuter" x1="32" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFEFA6" />
+            <stop offset="40%" stop-color="#FFA812" />
+            <stop offset="100%" stop-color="#E14B00" />
+          </linearGradient>
+          <linearGradient id="flameInner" x1="32" y1="12" x2="32" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="60%" stop-color="#FFF2A3" />
+            <stop offset="100%" stop-color="#FFB326" />
+          </linearGradient>
+          <linearGradient id="diyaBowl" x1="12" y1="32" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F2C766" />
+            <stop offset="35%" stop-color="#D4AF37" />
+            <stop offset="70%" stop-color="#936B15" />
+            <stop offset="100%" stop-color="#583C04" />
+          </linearGradient>
+          <linearGradient id="diyaBase" x1="19" y1="51" x2="45" y2="59" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#936B15" />
+            <stop offset="50%" stop-color="#D4AF37" />
+            <stop offset="100%" stop-color="#583C04" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <span class="loader-tagline">Lighting the Celebration</span>
+
+      <!-- Slender Gold Progress Bar -->
+      <div class="loader-progress-track">
+        <div class="loader-progress-bar" id="loaderProgressBar"></div>
+      </div>
+
+      <span class="loader-status-text" id="loaderStatusText">0%</span>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       SECTION 2 & 1: FULL-SCREEN CANVAS & SCROLL-DRIVEN ANIMATION RUNWAY
+       ======================================================================== -->
+  <main class="scroll-track" id="scrollTrack">
+    <div class="sticky-viewport">
+      <!-- Full-screen Sticky Canvas -->
+      <canvas id="diwaliCanvas" class="diwali-canvas"></canvas>
+
+      <!-- SECTION 1: MINIMAL INTRODUCTION OVERLAY -->
+      <header class="intro-overlay" id="introOverlay">
+        <div class="intro-top-brand">
+          <span class="brand-dot"></span>
+          <span class="brand-title">Shubh Deepavali</span>
+          <span class="brand-dot"></span>
+        </div>
+
+        <div class="intro-center">
+          <!-- Subtle Decorative Diya Motif -->
+          <svg class="diwali-decorative-motif" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="14" r="11" fill="url(#introGlow)" opacity="0.6" />
+            <path d="M24 3C24 3 17 11 17 17C17 21 20 24 24 24C28 24 31 21 31 17C31 11 24 3 24 3Z" fill="url(#introFlame)" />
+            <path d="M10 24C11 34 17 38 24 38C31 38 37 34 38 24C33 27 29 27 24 27C19 27 15 27 10 24Z" fill="url(#introDiya)" />
+            <defs>
+              <radialGradient id="introGlow" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0%" stop-color="#FFB300" />
+                <stop offset="100%" stop-color="#FFB300" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="introFlame" x1="24" y1="3" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#FFFAD9" />
+                <stop offset="50%" stop-color="#FFB014" />
+                <stop offset="100%" stop-color="#E24D00" />
+              </linearGradient>
+              <linearGradient id="introDiya" x1="10" y1="24" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#F2C766" />
+                <stop offset="100%" stop-color="#8E6511" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          <h1 class="intro-heading">An Evening of Light &amp; Togetherness</h1>
+          <p class="intro-subtext">Immerse yourself in the festival of illumination</p>
+        </div>
+
+        <div class="intro-scroll-hint">
+          <span class="scroll-hint-label">Scroll to celebrate &darr;</span>
+        </div>
+      </header>
+
+      <!-- Elegant Corner Progress HUD (Visible during scroll) -->
+      <div class="scroll-hud" id="scrollHud" aria-hidden="true">
+        <div class="hud-track">
+          <div class="hud-fill" id="hudFill"></div>
+        </div>
+        <span class="hud-text" id="hudText">0%</span>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ========================================================================
+       SECTION 3: FESTIVE GREETING MESSAGE
+       ======================================================================== -->
+  <section class="greeting-section" id="greetingSection" aria-label="Diwali Greeting">
+    <div class="greeting-container">
+      <!-- Diya Motif -->
+      <svg class="greeting-diya" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="32" cy="18" r="16" fill="url(#flameGlow2)" opacity="0.6" />
+        <path d="M32 4C32 4 23 15 23 23C23 28 27 32 32 32C37 32 41 28 41 23C41 15 32 4 32 4Z" fill="url(#flameOuter2)" />
+        <path d="M32 12C32 12 27 18 27 23C27 26 29 28 32 28C35 28 37 26 37 23C37 18 32 12 32 12Z" fill="url(#flameInner2)" />
+        <path d="M12 32C13 46 22 52 32 52C42 52 51 46 52 32C45 36 39 36 32 36C25 36 19 36 12 32Z" fill="url(#diyaBowl2)" />
+        <path d="M12 32C20 37 44 37 52 32C46 34 38 35 32 35C26 35 18 34 12 32Z" fill="#FFF2BD" opacity="0.8" />
+        <path d="M26 51C26 55 22 58 19 59H45C42 58 38 55 38 51H26Z" fill="url(#diyaBase2)" />
+        <defs>
+          <radialGradient id="flameGlow2" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stop-color="#FF9D00" />
+            <stop offset="100%" stop-color="#FF9D00" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="flameOuter2" x1="32" y1="4" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFEFA6" />
+            <stop offset="40%" stop-color="#FFA812" />
+            <stop offset="100%" stop-color="#E14B00" />
+          </linearGradient>
+          <linearGradient id="flameInner2" x1="32" y1="12" x2="32" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="60%" stop-color="#FFF2A3" />
+            <stop offset="100%" stop-color="#FFB326" />
+          </linearGradient>
+          <linearGradient id="diyaBowl2" x1="12" y1="32" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F2C766" />
+            <stop offset="50%" stop-color="#D4AF37" />
+            <stop offset="100%" stop-color="#6E4D07" />
+          </linearGradient>
+          <linearGradient id="diyaBase2" x1="19" y1="51" x2="45" y2="59" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#8E6511" />
+            <stop offset="100%" stop-color="#4E3402" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <!-- Decorative Divider -->
+      <div class="decorative-divider" aria-hidden="true">
+        <span class="divider-line"></span>
+        <span class="divider-sparkle">&#10022;</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <!-- Main Festive Headline -->
+      <h2 class="greeting-headline">Happy Diwali</h2>
+
+      <!-- Heartfelt Greeting Message -->
+      <p class="greeting-message">
+        May this festival of lights bring happiness, prosperity, peace and beautiful new beginnings to you and your family.
+      </p>
+
+      <!-- Sign-off Block -->
+      <div class="greeting-signature-block">
+        <span class="signature-label">With warm wishes,</span>
+        <span class="signature-name">Sandesh</span>
+      </div>
+
+      <!-- Action Button to Relive Experience -->
+      <button class="replay-button" id="replayBtn" type="button" aria-label="Replay celebration from start">
+        <svg class="replay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        <span>Experience Again</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- JavaScript Animation Engine -->
+  <script src="js/animation.js"></script>
+</body>
+</html>
