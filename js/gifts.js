@@ -314,6 +314,7 @@
     }
   }
 
+    // Construct multimedia preview element for recipient card reveal
   function renderGiftCard(recipient) {
     if (!recipient) return;
 
