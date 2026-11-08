@@ -182,6 +182,7 @@
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
 
+    // Convert input string to title case representation for UI presentation
   function toTitleCase(str) {
     return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   }
