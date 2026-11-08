@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+  // Initialize canvas rendering context and display parameters
   const canvas = document.getElementById('diwaliCanvas');
   const ctx = canvas.getContext('2d', { alpha: false });
   const scrollTrack = document.getElementById('scrollTrack');
