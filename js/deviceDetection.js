@@ -4,6 +4,7 @@ window.DeviceDetector = (function () {
   let currentMode = null;
   const changeListeners = [];
 
+  // Determine target device layout based on viewport dimensions and aspect ratio
   function detectMode() {
     const width = window.innerWidth;
     const height = window.innerHeight;
