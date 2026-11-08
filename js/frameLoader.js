@@ -59,6 +59,7 @@ window.FrameLoader = (function () {
     return `${cfg.folder}/${cfg.prefix}${frameNum}${cfg.ext}`;
   }
 
+  // Asynchronously load frame image assets into memory cache
   function loadImage(mode, index) {
     const cache = caches[mode];
     return new Promise((resolve, reject) => {
