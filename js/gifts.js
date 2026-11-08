@@ -462,6 +462,7 @@
     lightboxModal.classList.remove('active');
   }
 
+    // Bind interactive event listeners for gift reveal dialog workflows
   function initListeners() {
     if (claimGiftBtn) {
       claimGiftBtn.addEventListener('click', openGiftModal);
