@@ -22,7 +22,7 @@ An Apple-inspired, scroll-driven interactive Diwali greeting website with intell
   - **Tap 3**: Dramatic lid lift, expanding golden starburst, smoothly transitioning into the Personalized Reveal Card.
 - **Dedicated Recipient Mappings**:
   - **15 Friends with Personalized Images**: Ashish, Yaswanth, Deepak, Satyam, Rehan, Junaid, Aryan, Zeeshan, Harsh, Akash, Karim, Sahil, Rahul, Shani, Raj.
-  - **4 Friends with Personalized Video Gifts**: Subhjite, Sadaf, Yash, Lav (assigned to the celebratory Diwali video).
+  - **4 Friends with Personalized Video Gifts**: Subhjite, Yash, Lav (assigned to the celebratory Diwali video).
   - **Sandesh (Host/Creator)**: Special Diwali creator card with Gemini celebration artwork.
   - **Family Rule**: Any unrecognized name automatically receives the warm Family Diwali Video experience with personalized greeting.
 - **Action Controls**:
