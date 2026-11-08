@@ -122,6 +122,7 @@ window.FrameLoader = (function () {
     }
   }
 
+    // Prioritize immediate preloading of adjacent frames around target index
   function prioritize(index, onFrameReady) {
     const cache = caches[activeMode];
     const safeIdx = Math.max(0, Math.min(activeConfig.totalFrames - 1, index));
