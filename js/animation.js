@@ -42,6 +42,7 @@
     }
   }
 
+    // Clear and prepare 2D canvas context for frame rendering
   function renderFrame(index, force = false) {
     if (!canvas || !ctx) return;
 
