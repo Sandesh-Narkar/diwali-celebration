@@ -67,6 +67,7 @@
   visibility: visible;
 }
 
+/* Modal dialog presentation and animated reveal transitions */
 .gift-modal-dialog {
   position: relative;
   width: 100%;
