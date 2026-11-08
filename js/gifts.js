@@ -186,6 +186,7 @@
     return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   }
 
+  // Normalize input text and resolve matching recipient profile
   function resolveRecipient(rawName) {
     const cleanKey = rawName.trim().toLowerCase().replace(/\s+/g, ' ');
 
