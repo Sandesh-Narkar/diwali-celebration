@@ -42,6 +42,7 @@ window.DeviceDetector = (function () {
     window.addEventListener('orientationchange', handleResizeOrOrientation, { passive: true });
   }
 
+    // Dispatch layout change notifications to subscribed listeners
   function notifyChange(newMode, oldMode) {
     for (let i = 0; i < changeListeners.length; i++) {
       try {
