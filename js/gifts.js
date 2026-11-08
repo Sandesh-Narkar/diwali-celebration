@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+  // Core configuration and asset paths for interactive gift reveal system
   const SHARED_FAMILY_VIDEO = 'GIFTS/FAMILY/diwali_video.mp4';
   const SPECIAL_FRIENDS_VIDEO = 'GIFTS/FAMILY/WhatsApp Video 2026-11-08 at 4.26.19 PM.mp4';
   const SHARED_GEMINI_TEMPLATE = 'GIFTS/FAMILY/Gemini_Generated_Image_e6np99e6np99e6np.png';
