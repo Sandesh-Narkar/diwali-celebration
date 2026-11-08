@@ -1,22 +1,11 @@
 /**
- * DIWALI SCROLL-DRIVEN ANIMATION ENGINE
- * Premium Apple-style interactive image sequence controller.
+ * DIWALI SCROLL-DRIVEN ANIMATION CONTROLLER
+ * Coordinates Dual-Sequence Engine (Desktop & Mobile), Canvas Rendering,
+ * and Apple-style Scroll Synchronization.
  */
 
 (function () {
   'use strict';
-
-  // --- CONFIGURATION & ASSET SPECS ---
-  const TOTAL_FRAMES = 101;
-  const FIRST_FRAME_NUM = 1;
-  const INITIAL_PRELOAD_COUNT = 14; // First 14 frames for instantaneous start
-  const MAX_CONCURRENT_LOADS = 4;
-
-  // Frame URL constructor (detected sequential 3-digit pattern: ezgif-frame-001.png to 101.png)
-  function getFrameUrl(index) {
-    const frameNum = String(index + FIRST_FRAME_NUM).padStart(3, '0');
-    return `IMAGES/ezgif-frame-${frameNum}.png`;
-  }
 
   // --- DOM ELEMENTS ---
   const canvas = document.getElementById('diwaliCanvas');
@@ -31,22 +20,20 @@
   const hudText = document.getElementById('hudText');
   const replayBtn = document.getElementById('replayBtn');
 
-  // --- STATE ---
-  const imageCache = new Array(TOTAL_FRAMES);
-  const imageStatus = new Array(TOTAL_FRAMES).fill('idle'); // 'idle', 'loading', 'loaded', 'error'
-  
+  // --- ENGINE STATE ---
+  let activeMode = window.DeviceDetector ? window.DeviceDetector.getMode() : 'desktop';
   let targetFrameIndex = 0;
   let currentFrameFloat = 0;
   let lastRenderedFrame = -1;
-  let isInitialLoadComplete = false;
-  let activeLoadsCount = 0;
-  let loadQueue = [];
+  let lastRenderedMode = null;
   let isRafRunning = false;
+  let isReady = false;
 
-  // --- RESPONSIVE HIGH-DPI CANVAS SIZING ---
+  // --- CANVAS RESIZING WITH DEVICE PIXEL RATIO ---
   function resizeCanvas() {
     if (!canvas) return;
 
+    // Use DPR capped at 2 for crisp rendering without excessive GPU memory on mobile
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const displayWidth = window.innerWidth;
     const displayHeight = window.innerHeight;
@@ -57,230 +44,64 @@
     if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
       canvas.width = targetWidth;
       canvas.height = targetHeight;
-      // Force immediate repaint on resize
+      // Repaint frame immediately on resize
       renderFrame(Math.round(currentFrameFloat), true);
     }
   }
 
-  // --- DRAW FRAME WITH OBJECT-FIT: CONTAIN LOGIC ---
+  // --- ADVANCED DUAL-SEQUENCE CANVAS RENDERING ---
   function renderFrame(index, force = false) {
     if (!canvas || !ctx) return;
-    
-    // Clamp index safely
-    const safeIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, index));
 
-    if (!force && safeIndex === lastRenderedFrame) {
+    const frameData = window.FrameLoader.getFrameOrNearest(index);
+    if (!frameData || !frameData.image) return;
+
+    const safeIndex = frameData.index;
+    if (!force && safeIndex === lastRenderedFrame && activeMode === lastRenderedMode) {
       return;
     }
 
-    const img = getFrameOrNearest(safeIndex);
-    if (!img) return;
-
+    const img = frameData.image;
     const cw = canvas.width;
     const ch = canvas.height;
-    const iw = img.naturalWidth || 1920;
-    const ih = img.naturalHeight || 1080;
 
-    // object-fit: contain scaling calculation
-    // Preserves 100% of the artwork without distortion or cropping
-    const scale = Math.min(cw / iw, ch / ih);
-    const dw = Math.round(iw * scale);
-    const dh = Math.round(ih * scale);
-    const dx = Math.round((cw - dw) / 2);
-    const dy = Math.round((ch - dh) / 2);
-
-    // Fill surrounding letterbox/pillarbox with ambient deep tone
+    // Ambient background clear
     ctx.fillStyle = '#080206';
     ctx.fillRect(0, 0, cw, ch);
 
-    // Draw frame
-    ctx.drawImage(img, dx, dy, dw, dh);
+    if (frameData.crop) {
+      // --- MOBILE SEQUENCE (VERTICAL 9:16 ARTWORK) ---
+      // Sample precisely from the 9:16 artwork coordinates, eliminating white padding
+      const { sx, sy, sw, sh } = frameData.crop;
+
+      // Fills mobile screen edge-to-edge without white borders or black bars
+      const scale = Math.max(cw / sw, ch / sh);
+      const dw = Math.round(sw * scale);
+      const dh = Math.round(sh * scale);
+      const dx = Math.round((cw - dw) / 2);
+      const dy = Math.round((ch - dh) / 2);
+
+      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+    } else {
+      // --- DESKTOP SEQUENCE (HORIZONTAL 16:9 ARTWORK) ---
+      // Preserves 100% of the desktop composition and typography
+      const iw = img.naturalWidth || 1920;
+      const ih = img.naturalHeight || 1080;
+
+      const scale = Math.min(cw / iw, ch / ih);
+      const dw = Math.round(iw * scale);
+      const dh = Math.round(ih * scale);
+      const dx = Math.round((cw - dw) / 2);
+      const dy = Math.round((ch - dh) / 2);
+
+      ctx.drawImage(img, dx, dy, dw, dh);
+    }
+
     lastRenderedFrame = safeIndex;
+    lastRenderedMode = activeMode;
   }
 
-  // --- GET LOADED FRAME OR NEAREST FALLBACK ---
-  // Guarantees zero blank frames and eliminates flickering
-  function getFrameOrNearest(index) {
-    if (imageCache[index] && imageStatus[index] === 'loaded') {
-      return imageCache[index];
-    }
-
-    // Search outwards for closest loaded frame
-    let closestImg = null;
-    let minDistance = Infinity;
-
-    for (let i = 0; i < TOTAL_FRAMES; i++) {
-      if (imageCache[i] && imageStatus[i] === 'loaded') {
-        const dist = Math.abs(i - index);
-        if (dist < minDistance) {
-          minDistance = dist;
-          closestImg = imageCache[i];
-        }
-      }
-    }
-
-    // Trigger priority loading for the missing frame
-    prioritizeFrame(index);
-
-    return closestImg;
-  }
-
-  // --- SMART PRELOADER & PROGRESSIVE QUEUE ---
-  function loadImage(index) {
-    return new Promise((resolve, reject) => {
-      if (imageStatus[index] === 'loaded') {
-        resolve(imageCache[index]);
-        return;
-      }
-      if (imageStatus[index] === 'loading') {
-        // Already loading; wait for it
-        const check = setInterval(() => {
-          if (imageStatus[index] === 'loaded') {
-            clearInterval(check);
-            resolve(imageCache[index]);
-          } else if (imageStatus[index] === 'error') {
-            clearInterval(check);
-            reject(new Error(`Frame ${index} failed`));
-          }
-        }, 50);
-        return;
-      }
-
-      imageStatus[index] = 'loading';
-      const img = new Image();
-      img.decoding = 'async';
-
-      img.onload = () => {
-        imageCache[index] = img;
-        imageStatus[index] = 'loaded';
-        resolve(img);
-      };
-
-      img.onerror = () => {
-        imageStatus[index] = 'error';
-        console.warn(`[Diwali Website] Could not load frame ${index} at ${getFrameUrl(index)}`);
-        reject(new Error(`Failed to load frame ${index}`));
-      };
-
-      img.src = getFrameUrl(index);
-    });
-  }
-
-  // Background queue processing
-  function processQueue() {
-    while (activeLoadsCount < MAX_CONCURRENT_LOADS && loadQueue.length > 0) {
-      const nextIndex = loadQueue.shift();
-      if (imageStatus[nextIndex] === 'idle') {
-        activeLoadsCount++;
-        loadImage(nextIndex)
-          .catch(() => {})
-          .finally(() => {
-            activeLoadsCount--;
-            // If current frame needed this image, redraw
-            const currentInt = Math.round(currentFrameFloat);
-            if (currentInt === nextIndex) {
-              renderFrame(currentInt, true);
-            }
-            processQueue();
-          });
-      }
-    }
-  }
-
-  // Dynamically prioritize frames around user scroll position
-  function prioritizeFrame(index) {
-    if (imageStatus[index] === 'idle') {
-      // Remove if present further down in queue
-      loadQueue = loadQueue.filter(i => i !== index);
-      // Place at front of queue
-      loadQueue.unshift(index);
-      processQueue();
-    }
-  }
-
-  function queueRemainingFrames() {
-    // Fill queue with remaining frames in forward order
-    for (let i = 0; i < TOTAL_FRAMES; i++) {
-      if (imageStatus[i] === 'idle' && !loadQueue.includes(i)) {
-        loadQueue.push(i);
-      }
-    }
-    processQueue();
-  }
-
-  // --- INITIAL CRITICAL PRELOAD ---
-  function startInitialPreload() {
-    const criticalIndices = [];
-    // 1. Initial sequential batch (frames 0 to 13)
-    for (let i = 0; i < Math.min(INITIAL_PRELOAD_COUNT, TOTAL_FRAMES); i++) {
-      criticalIndices.push(i);
-    }
-    // 2. Final frame so end greeting transition is instantaneous
-    criticalIndices.push(TOTAL_FRAMES - 1);
-    // 3. Milestone checkpoints (every 15 frames) for instant scrub preview
-    for (let i = 20; i < TOTAL_FRAMES - 1; i += 15) {
-      if (!criticalIndices.includes(i)) {
-        criticalIndices.push(i);
-      }
-    }
-
-    let loadedCount = 0;
-    const totalCritical = criticalIndices.length;
-
-    criticalIndices.forEach(idx => {
-      loadImage(idx)
-        .then(() => {
-          loadedCount++;
-          const percent = Math.min(100, Math.round((loadedCount / totalCritical) * 100));
-          if (loaderProgressBar) {
-            loaderProgressBar.style.width = `${percent}%`;
-          }
-          if (loaderStatusText) {
-            loaderStatusText.textContent = `${percent}%`;
-          }
-
-          if (loadedCount === 1) {
-            // Draw first frame immediately
-            renderFrame(0, true);
-          }
-
-          if (loadedCount >= totalCritical && !isInitialLoadComplete) {
-            finishLoader();
-          }
-        })
-        .catch(() => {
-          // If a frame fails, proceed so user is never blocked
-          loadedCount++;
-          if (loadedCount >= totalCritical && !isInitialLoadComplete) {
-            finishLoader();
-          }
-        });
-    });
-  }
-
-  function finishLoader() {
-    isInitialLoadComplete = true;
-
-    // Smooth fade out of loader screen
-    setTimeout(() => {
-      if (loaderScreen) {
-        loaderScreen.classList.add('fade-out');
-      }
-      // Paint first frame cleanly
-      renderFrame(0, true);
-      
-      // Begin progressive background loading for remaining frames
-      queueRemainingFrames();
-      
-      // Start main animation tick
-      if (!isRafRunning) {
-        isRafRunning = true;
-        requestAnimationFrame(animationLoop);
-      }
-    }, 450);
-  }
-
-  // --- SCROLL ENGINE & CALCULATION ---
+  // --- SCROLL CALCULATION & INTERACTION ---
   function calculateScrollState() {
     if (!scrollTrack) return;
 
@@ -289,16 +110,15 @@
 
     if (totalDistance <= 0) return;
 
-    // Progress = scrollProgress / totalScrollDistance
+    // Map scroll distance to normalized progress (0.0 to 1.0)
     const progress = Math.max(0, Math.min(1, -trackRect.top / totalDistance));
+    const totalFrames = window.FrameLoader.getTotalFrames();
 
-    // Map scroll progress to frame index
-    targetFrameIndex = Math.floor(progress * (TOTAL_FRAMES - 1));
-    targetFrameIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, targetFrameIndex));
+    targetFrameIndex = Math.floor(progress * (totalFrames - 1));
+    targetFrameIndex = Math.max(0, Math.min(totalFrames - 1, targetFrameIndex));
 
-    // Handle Section 1 Intro Fade
+    // Handle Section 1 Intro Fade (smoothly fades in first 12% of scroll)
     if (introOverlay) {
-      // Intro gently fades out as user begins scrolling (first 12% of scroll distance)
       const fadeThreshold = 0.12;
       const introFade = Math.min(1, progress / fadeThreshold);
       const introOpacity = Math.max(0, 1 - introFade);
@@ -313,7 +133,7 @@
       }
     }
 
-    // Handle Scroll HUD visibility & progress fill
+    // Handle Ambient Corner HUD
     if (scrollHud && hudFill && hudText) {
       if (progress > 0.04 && progress < 0.98) {
         scrollHud.classList.add('visible');
@@ -325,17 +145,19 @@
       hudText.textContent = `${pct}%`;
     }
 
-    // Dynamic queue prioritizing nearby frames on scroll
-    prioritizeFrame(targetFrameIndex);
-    if (targetFrameIndex + 1 < TOTAL_FRAMES) prioritizeFrame(targetFrameIndex + 1);
-    if (targetFrameIndex + 2 < TOTAL_FRAMES) prioritizeFrame(targetFrameIndex + 2);
-    if (targetFrameIndex - 1 >= 0) prioritizeFrame(targetFrameIndex - 1);
+    // Dynamic queue prioritization for nearby frames
+    window.FrameLoader.prioritize(targetFrameIndex, (readyIdx) => {
+      const currentInt = Math.round(currentFrameFloat);
+      if (currentInt === readyIdx) {
+        renderFrame(currentInt, true);
+      }
+    });
   }
 
-  // --- RAF ANIMATION LOOP (APPLE-STYLE LERP DAMPING) ---
+  // --- REQUEST-ANIMATION-FRAME ENGINE (APPLE-STYLE LERP) ---
   function animationLoop() {
-    // Natural easing dampener (0.18):
-    // Smooth frame transitions without lag or scroll hijacking
+    // Smooth inertia dampener (0.18):
+    // Synchronizes frame advancement naturally without lag or scroll hijacking
     const diff = targetFrameIndex - currentFrameFloat;
 
     if (Math.abs(diff) > 0.001) {
@@ -343,7 +165,7 @@
       const frameToDraw = Math.round(currentFrameFloat);
       renderFrame(frameToDraw);
     } else if (currentFrameFloat !== targetFrameIndex) {
-      // Snap to exact frame when scrolling halts
+      // Settle on exact frame when scrolling halts
       currentFrameFloat = targetFrameIndex;
       renderFrame(targetFrameIndex);
     }
@@ -351,47 +173,107 @@
     requestAnimationFrame(animationLoop);
   }
 
-  // --- EVENT LISTENERS ---
-  // Native scroll handler (Passive for 60fps / 120fps scrolling performance)
+  // --- DEVICE & ORIENTATION MODE SWITCHING ---
+  function handleDeviceModeSwitch(newMode) {
+    if (newMode === activeMode) return;
+
+    console.log(`[Diwali Animation] Switching animation sequence: ${activeMode} -> ${newMode}`);
+    const prevProgress = currentFrameFloat / (window.FrameLoader.getTotalFrames() - 1);
+
+    activeMode = newMode;
+    window.FrameLoader.initMode(newMode);
+    resizeCanvas();
+
+    // Preload critical frames for newly activated sequence
+    window.FrameLoader.preloadInitial(newMode, null, () => {
+      // Restore equivalent progress in new sequence
+      const newTotal = window.FrameLoader.getTotalFrames();
+      currentFrameFloat = Math.round(prevProgress * (newTotal - 1));
+      targetFrameIndex = currentFrameFloat;
+
+      renderFrame(currentFrameFloat, true);
+      window.FrameLoader.queueRemaining((readyIdx) => {
+        if (Math.round(currentFrameFloat) === readyIdx) {
+          renderFrame(readyIdx, true);
+        }
+      });
+    });
+  }
+
+  // --- INITIALIZATION ---
+  function init() {
+    activeMode = window.DeviceDetector.getMode();
+    window.FrameLoader.initMode(activeMode);
+
+    resizeCanvas();
+
+    // Listen for orientation or screen size breakpoint changes
+    window.DeviceDetector.onChange(handleDeviceModeSwitch);
+
+    // Initial critical preloading for active mode
+    window.FrameLoader.preloadInitial(
+      activeMode,
+      // Progress tracking
+      function (percent) {
+        if (loaderProgressBar) {
+          loaderProgressBar.style.width = `${percent}%`;
+        }
+        if (loaderStatusText) {
+          loaderStatusText.textContent = `${percent}%`;
+        }
+      },
+      // Completion
+      function () {
+        isReady = true;
+
+        setTimeout(() => {
+          if (loaderScreen) {
+            loaderScreen.classList.add('fade-out');
+          }
+          // Render initial frame
+          renderFrame(0, true);
+
+          // Begin progressive background loading for the rest of frames
+          window.FrameLoader.queueRemaining((readyIdx) => {
+            if (Math.round(currentFrameFloat) === readyIdx) {
+              renderFrame(readyIdx, true);
+            }
+          });
+
+          // Start RAF tick
+          if (!isRafRunning) {
+            isRafRunning = true;
+            requestAnimationFrame(animationLoop);
+          }
+        }, 400);
+      }
+    );
+
+    calculateScrollState();
+  }
+
+  // --- LISTENERS ---
   window.addEventListener('scroll', calculateScrollState, { passive: true });
 
-  // Responsive resize & orientation handlers
-  let resizeTimeout;
-  function handleResize() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
+  let resizeDebounce;
+  function onResize() {
+    clearTimeout(resizeDebounce);
+    resizeDebounce = setTimeout(() => {
       resizeCanvas();
       calculateScrollState();
     }, 60);
   }
 
-  window.addEventListener('resize', handleResize, { passive: true });
-  window.addEventListener('orientationchange', handleResize, { passive: true });
+  window.addEventListener('resize', onResize, { passive: true });
+  window.addEventListener('orientationchange', onResize, { passive: true });
 
-  // Interactive Replay Button
   if (replayBtn) {
     replayBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  // Keyboard navigation support (Arrow Up / Down, Page Up / Down, Home / End)
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
-
-  // --- INITIALIZATION ---
-  function init() {
-    resizeCanvas();
-    startInitialPreload();
-    calculateScrollState();
-  }
-
+  // Start initialization
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
@@ -399,4 +281,3 @@
   }
 
 })();
-

@@ -1,17 +1,28 @@
-# 🪔 Happy Diwali — Full-Screen Scroll-Driven Animation Website
+# 🪔 Happy Diwali — Responsive Dual-Sequence Scroll-Driven Website
 
-An Apple-inspired, scroll-driven interactive Diwali greeting website. The visual progression is directly mapped to the visitor's scrolling, synchronizing frame advancement with scroll physics on both desktop and mobile devices.
+An Apple-inspired, scroll-driven interactive Diwali greeting website with intelligent dual-sequence animation. The site automatically detects whether the visitor is on a desktop computer or a smartphone/tablet and seamlessly serves the dedicated horizontal or portrait image sequence.
 
 ---
 
 ## ✨ Features
 
-- **Apple-Inspired Scroll Dynamics**: Advancing forward on scroll down, smooth reversal on scroll up, natural holding on pause, zero autoplay.
-- **Full-Screen Sticky Canvas**: High-DPI responsive canvas rendering with `object-fit: contain` logic preserving 100% of the artwork and typography without cropping.
-- **Smart Asset Preloader**: Lightweight festive loader with real-time percentage tracking and priority queue preloading to prevent blank frames.
-- **Typography & Festive Styling**: Elegant Google Fonts (`Cinzel`, `Cormorant Garamond`, `Outfit`), warm gold metallic gradients, and subtle glowing Diya motifs.
-- **Conclusion Greeting**: Festive conclusion message with an interactive replay action.
-- **Zero Heavy Dependencies**: Built purely with vanilla HTML5, CSS3, and JavaScript.
+- **Dual-Sequence Architecture**:
+  - **Desktop Experience**: Loads horizontal (16:9) frames from `images/` with edge-to-edge full-screen presentation.
+  - **Mobile Experience**: Loads vertical (9:16) portrait frames from `MOBILE_IMAGE/`, fitting modern smartphone viewports edge-to-edge without white borders or empty negative spaces.
+- **Intelligent Responsive Detection**:
+  - Detects screen width, orientation, touch capabilities, and tablet dimensions.
+  - Portrait tablets gracefully use the mobile sequence; landscape tablets use the desktop sequence.
+  - Smoothly handles orientation changes, preserving the user's current animation progress.
+- **Apple-Inspired Scroll Dynamics**:
+  - Natural forward playback on scroll down, smooth reversal on scroll up.
+  - Precise frame holding on scroll pause (zero autoplay).
+  - Synchronized via `requestAnimationFrame` with tactile inertia damping.
+- **High-Performance Asset Management**:
+  - Independent preloading & caching: only loads the sequence required for the active device.
+  - Progressive background loader with priority queueing for frames near the current scroll position.
+  - Nearest-frame fallback to eliminate blank frames or flickering during fast scrubbing.
+- **Pure Vanilla Implementation**:
+  - Zero heavy framework dependencies (pure HTML5, CSS3, vanilla JS).
 
 ---
 
@@ -19,14 +30,17 @@ An Apple-inspired, scroll-driven interactive Diwali greeting website. The visual
 
 ```
 DIWALI_WEBSITE/
-├── index.html          # Main HTML structure with semantic sections
+├── index.html              # Main HTML structure with semantic sections
 ├── css/
-│   └── style.css       # Responsive styling, typography & animations
+│   └── style.css           # Responsive styling & typography
 ├── js/
-│   └── animation.js    # Canvas rendering & scroll engine
-├── IMAGES/             # 101 sequential animation frames (ezgif-frame-001 to 101)
-├── .gitignore          # Git exclusion rules
-└── README.md           # Project documentation
+│   ├── deviceDetection.js  # Device, orientation & breakpoint detector
+│   ├── frameLoader.js      # Independent frame cache & progressive queue
+│   └── animation.js        # Canvas rendering & scroll engine
+├── IMAGES/                 # Desktop horizontal frames (ezgif-frame-001 to 101)
+├── MOBILE_IMAGE/           # Mobile vertical frames (ezgif-frame-001 to 101)
+├── .gitignore              # Git exclusion rules
+└── README.md               # Project documentation
 ```
 
 ---
@@ -46,13 +60,3 @@ npx serve .
 
 ### Option 3: Direct File Access
 Open `index.html` directly in any modern web browser.
-
----
-
-## 🌐 Deploying to GitHub Pages
-
-1. Go to your repository on GitHub.
-2. Navigate to **Settings** &rarr; **Pages**.
-3. Under **Branch**, select `main` and root folder `/`, then click **Save**.
-4. In a few minutes, your site will be live on `https://<username>.github.io/<repo-name>/`.
-
